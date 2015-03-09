@@ -1,2 +1,1 @@
-Imabw for Symbian^3 device
-==========================
+# Imabw for Symbian^3 device

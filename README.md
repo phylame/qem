@@ -1,2 +1,2 @@
-# qem
-Pem for Qt
+# Library Qem
+Pem for Qt target

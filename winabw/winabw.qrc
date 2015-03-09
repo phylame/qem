@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="appIcon">res/catalog.png</file>
+        <file alias="editDelete">res/edit-clear.png</file>
+        <file alias="editCopy">res/edit-copy.png</file>
+        <file alias="editCopy">res/edit-cut.png</file>
+        <file alias="editPaste">res/edit-paste.png</file>
+    </qresource>
+</RCC>

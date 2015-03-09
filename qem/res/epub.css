@@ -1,0 +1,248 @@
+/**
+ * Pem's ePub default CSS file.
+ * Date: 9/28/2014
+ */
+
+/* Revised: 4/10/2014 */
+
+@font-face {
+    font-family: "pemst";
+    src: local("宋体"),
+    local("DK-SONGTI"),
+    url(res:///opt/sony/ebook/FONT/zw.ttf),
+    url(res:///Data/FONT/zw.ttf),
+    url(res:///opt/sony/ebook/FONT/tt0011m_.ttf),
+    url(res:///ebook/fonts/../../mnt/sdcard/fonts/zw.ttf),
+    url(res:///ebook/fonts/../../mnt/extsd/fonts/zw.ttf),
+    url(res:///ebook/fonts/zw.ttf),
+    url(res:///ebook/fonts/DroidSansFallback.ttf),
+    url(res:///fonts/ttf/zw.ttf),
+    url(res:///../../media/mmcblk0p1/fonts/zw.ttf),
+    url(res:///DK_System/system/font/zw.ttf),
+    url(res:///abook/fonts/zw.ttf),
+    url(res:///system/fonts/zw.ttf),
+    url(res:///system/media/sdcard/fonts/zw.ttf),
+    url(res:///media/fonts/zw.ttf),
+    url(res:///sdcard/fonts/zw.ttf),
+    url(res:///system/fonts/DroidSansFallback.ttf),
+    url(res:///mnt/MOVIFAT/font/zw.ttf),
+    url(res:///media/flash/fonts/zw.ttf),
+    url(res:///media/sd/fonts/zw.ttf),
+    url(res:///opt/onyx/arm/lib/fonts/AdobeHeitiStd-Regular.otf),
+    url(res:///../../fonts/zw.ttf),
+    url(res:///../fonts/zw.ttf),
+    url(res:///mnt/sdcard/fonts/zw.ttf),
+    url(res:///fonts/zw.ttf),
+    url(res:///../../../../Windows/fonts/zw.ttf);
+}
+
+@font-face {
+    font-family: "pemfs";
+    src: local("仿宋"),
+    local("DK-FANGSONG"),
+    url(res:///opt/sony/ebook/FONT/fs.ttf),
+    url(res:///Data/FONT/fs.ttf),
+    url(res:///opt/sony/ebook/FONT/tt0011m_.ttf),
+    url(res:///ebook/fonts/../../mnt/sdcard/fonts/fs.ttf),
+    url(res:///ebook/fonts/../../mnt/extsd/fonts/fs.ttf),
+    url(res:///ebook/fonts/fs.ttf),
+    url(res:///ebook/fonts/DroidSansFallback.ttf),
+    url(res:///fonts/ttf/fs.ttf),
+    url(res:///../../media/mmcblk0p1/fonts/fs.ttf),
+    url(res:///DK_System/system/font/fs.ttf),
+    url(res:///abook/fonts/fs.ttf),
+    url(res:///system/fonts/fs.ttf),
+    url(res:///system/media/sdcard/fonts/fs.ttf),
+    url(res:///media/fonts/fs.ttf),
+    url(res:///sdcard/fonts/fs.ttf),
+    url(res:///system/fonts/DroidSansFallback.ttf),
+    url(res:///mnt/MOVIFAT/font/fs.ttf),
+    url(res:///media/flash/fonts/fs.ttf),
+    url(res:///media/sd/fonts/fs.ttf),
+    url(res:///opt/onyx/arm/lib/fonts/AdobeHeitiStd-Regular.otf),
+    url(res:///../../fonts/fs.ttf),
+    url(res:///../fonts/fs.ttf),
+    url(res:///mnt/sdcard/fonts/fs.ttf),
+    url(res:///fonts/fs.ttf),
+    url(res:///../../../../Windows/fonts/fs.ttf);
+}
+
+@font-face {
+    font-family: "pemkt";
+    src: local("楷体"),
+    local("DK-KAITI"),
+    url(res:///opt/sony/ebook/FONT/kt.ttf),
+    url(res:///Data/FONT/kt.ttf),
+    url(res:///opt/sony/ebook/FONT/tt0011m_.ttf),
+    url(res:///ebook/fonts/../../mnt/sdcard/fonts/kt.ttf),
+    url(res:///ebook/fonts/../../mnt/extsd/fonts/kt.ttf),
+    url(res:///ebook/fonts/kt.ttf),
+    url(res:///ebook/fonts/DroidSansFallback.ttf),
+    url(res:///fonts/ttf/kt.ttf),
+    url(res:///../../media/mmcblk0p1/fonts/kt.ttf),
+    url(res:///DK_System/system/font/kt.ttf),
+    url(res:///abook/fonts/kt.ttf),
+    url(res:///system/fonts/kt.ttf),
+    url(res:///system/media/sdcard/fonts/kt.ttf),
+    url(res:///media/fonts/kt.ttf),
+    url(res:///sdcard/fonts/kt.ttf),
+    url(res:///system/fonts/DroidSansFallback.ttf),
+    url(res:///mnt/MOVIFAT/font/kt.ttf),
+    url(res:///media/flash/fonts/kt.ttf),
+    url(res:///media/sd/fonts/kt.ttf),
+    url(res:///opt/onyx/arm/lib/fonts/AdobeHeitiStd-Regular.otf),
+    url(res:///../../fonts/kt.ttf),
+    url(res:///../fonts/kt.ttf),
+    url(res:///mnt/sdcard/fonts/kt.ttf),
+    url(res:///fonts/kt.ttf),
+    url(res:///../../../../Windows/fonts/kt.ttf);
+}
+
+@font-face {
+    font-family: "pemht";
+    src: local("黑体"),
+    local("DK-HEITI"),
+    url(res:///opt/sony/ebook/FONT/ht.ttf),
+    url(res:///Data/FONT/ht.ttf),
+    url(res:///opt/sony/ebook/FONT/tt0011m_.ttf),
+    url(res:///ebook/fonts/../../mnt/sdcard/fonts/ht.ttf),
+    url(res:///ebook/fonts/../../mnt/extsd/fonts/ht.ttf),
+    url(res:///ebook/fonts/ht.ttf),
+    url(res:///ebook/fonts/DroidSansFallback.ttf),
+    url(res:///fonts/ttf/ht.ttf),
+    url(res:///../../media/mmcblk0p1/fonts/ht.ttf),
+    url(res:///DK_System/system/font/ht.ttf),
+    url(res:///abook/fonts/ht.ttf),
+    url(res:///system/fonts/ht.ttf),
+    url(res:///system/media/sdcard/fonts/ht.ttf),
+    url(res:///media/fonts/ht.ttf),
+    url(res:///sdcard/fonts/ht.ttf),
+    url(res:///system/fonts/DroidSansFallback.ttf),
+    url(res:///mnt/MOVIFAT/font/ht.ttf),
+    url(res:///media/flash/fonts/ht.ttf),
+    url(res:///media/sd/fonts/ht.ttf),
+    url(res:///opt/onyx/arm/lib/fonts/AdobeHeitiStd-Regular.otf),
+    url(res:///../../fonts/ht.ttf),
+    url(res:///../fonts/ht.ttf),
+    url(res:///mnt/sdcard/fonts/ht.ttf),
+    url(res:///fonts/ht.ttf),
+    url(res:///../../../../Windows/fonts/ht.ttf);
+}
+
+body {
+    font-family: "pemst", serif;
+    padding: 0%;
+    margin-top: 0%;
+    margin-bottom: 0%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+
+div {
+    font-family: "pemst", serif;
+    margin: 0%;
+    padding: 0%;
+}
+
+/* cover container */
+.cover_div {
+    text-align: center;
+}
+
+/* Book title container */
+.book_title_div {
+    margin-top: 0.5em;
+}
+.book_title_div h1 {
+    font-family: "pemkt", serif;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+}
+
+/* Book intro container */
+.book_intro_div {
+    margin-top: 0.7em;
+}
+.book_intro_div h3 {	/* intro text */
+    font-family: "pemht";
+    font-size: 1.2em;
+    text-align: left;
+}
+.book_intro_div p {
+    font-family: "pemfs", serif;
+    font-size: 1em;
+    text-align: left;
+    text-indent: 2em;
+    margin-top: 0.5em;
+}
+
+/* InfoPage container */
+.book_info_div {
+    margin-top: 0.5em;
+}
+.book_info_div h3 {	/* info page title */
+    font-family: "pemst";
+    font-size: 1.5em;
+    text-align: center;
+}
+.book_info_div p {
+    font-family: "pemkt", serif;
+    font-size: 1em;
+    text-align: left;
+    text-indent: 0.5em;
+    margin-top: 0.5em;
+}
+
+/* Chapter title container */
+.chapter_title_div {
+    margin-top: 0.5em;
+}
+.chapter_title_div h3 {	    /* chapter title */
+    font-family: "pemkt", serif;
+    font-size: 1.5em;
+    text-align: center;
+    color: #CC3333;
+}
+
+/* Chapter intro container */
+.chapter_intro_div {
+    margin-top: 0.2em;
+}
+.chapter_intro_div p {
+    font-family: "pemfs", serif;
+    font-style: italic;
+    font-size: 0.8em;
+    text-align: left;
+    text-indent: 2em;
+    margin-top: 0.4em;
+    color: #680000;
+}
+
+/* TOC container */
+.toc_div {
+    padding-top: 0.4em;
+}
+.toc_div p {
+    font-family: "pemst", serif;
+    font-size: 1em;
+    text-align: left;
+    text-indent: 0.5em;
+    margin-top: 0.5em;
+}
+.toc_div p a {
+    text-decoration: none;
+}
+
+/* Chapter text container*/
+.text_div {
+    margin-top: 0.4em;
+}
+.text_div p {
+    font-family: "pemst", serif;
+    font-size: 1em;
+    text-align: left;
+    text-indent: 2em;
+    margin-top: 0.5em;
+}
+

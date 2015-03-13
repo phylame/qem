@@ -84,38 +84,14 @@ Page {
                 checked: settings.enterAfterAdd
                 onCheckedChanged: settings.enterAfterAdd = checked
             }
-
-            Label {
-                text: qsTr("Maximum shown parts: ") + sdShownParts.value
-                anchors.left: parent.left
-                anchors.leftMargin: 6
-                platformInverted: app.platformInverted
-            }
-            Row {
-                width: parent.width
-                Label {
-                    id: lbSdMin
-                    text: sdShownParts.minimumValue
-                    anchors.verticalCenter: parent.verticalCenter
-                    platformInverted: app.platformInverted
-                }
-                Slider {
-                    id: sdShownParts
-                    minimumValue: 1
-                    maximumValue: 400
-                    value: settings.maxShownParts
-                    platformInverted: app.platformInverted
-                    width: parent.width - lbSdMin.width - lbSdMax.width
-                    stepSize: 1
-                    valueIndicatorVisible: true
-                    onPressedChanged: settings.maxShownParts = value
-                }
-                Label {
-                    id: lbSdMax
-                    text: sdShownParts.maximumValue
-                    anchors.verticalCenter: parent.verticalCenter
-                    platformInverted: app.platformInverted
-                }
+            ComboSlider {
+                titlePrefix: qsTr("Maximum shown parts: ")
+                minimumValue: 1
+                maximumValue: 400
+                stepSize: 1
+                value: settings.maxShownParts
+                valueIndicatorVisible: true
+                onPressedChanged: settings.maxShownParts = value
             }
         }
     }

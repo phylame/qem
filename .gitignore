@@ -23,6 +23,9 @@ ui_*.h
 Makefile*
 *-build-*
 
+*.cache
+*.swp
+
 # QtCreator
 
 *.autosave

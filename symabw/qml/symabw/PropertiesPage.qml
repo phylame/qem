@@ -121,7 +121,7 @@ Page {
         var names = part.names();
         for (var ix = 0; ix < names.length; ++ix) {
             var name = names[ix];
-            if ("title" === name) {     // ignore title
+            if ("title" === name || name.match("source_.*")) {     // ignore title
                 continue;
             }
             var value = utility.formatVariant(part.attribute(name));

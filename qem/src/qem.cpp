@@ -39,6 +39,21 @@ const QString Qem::VERSION(QEM_VERSION);
 
 const QString Qem::FORMAT_PMAB("pmab");
 
+QString Qem::variantType(const QVariant &v)
+{
+    QString type = v.typeName();
+    if (type.isEmpty()) {
+        if(v.canConvert<QObject*>()) {
+            type = v.value<QObject*>()->metaObject()->className();
+        }
+    } else if ("FileObjectPointer" == type) {
+        type = "file";
+    } else if ("TextObject" == type) {
+        type = "text";
+    }
+    return type;
+}
+
 QString Qem::formatVariant(const QVariant &v)
 {
     QString s;
@@ -88,10 +103,7 @@ QString Qem::formatVariant(const QVariant &v)
             if (p != 0) {
                 s = p->name();
             }
-        }
-#ifdef QEM_QML_TARGET
-        // For QML build bug
-        else if (v.canConvert<QObject*>()) {     // convert by class name
+        } else if (v.canConvert<QObject*>()) {     // convert by class name
             QObject *obj = v.value<QObject*>();
             const char *className = obj->metaObject()->className();
             if (QString("FileObject") == className) {
@@ -100,9 +112,7 @@ QString Qem::formatVariant(const QVariant &v)
                     s = file->name();
                 }
             }
-        }
-#endif
-        else if (v.canConvert<TextObject>()) {
+        } else if (v.canConvert<TextObject>()) {
             s = v.value<TextObject>().text();
         }
     }

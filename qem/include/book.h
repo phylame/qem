@@ -20,7 +20,6 @@
 #define QEM_BOOK_H
 
 #include "chapter.h"
-#include "item.h"
 #include <QDate>
 #include <QMap>
 
@@ -52,7 +51,7 @@ protected:
     /// Set all attributes to defaule.
     void reset();
 public:
-    typedef QMap<QString, Item*> ExtensionMap;
+    typedef QMap<QString, QVariant> ExtensionMap;
 
     explicit Book(const QString &title = QString(), const QString &author = QString(),
                   QObject *parent = 0);
@@ -99,61 +98,44 @@ public:
     QString language() const;
     void setLanguage(const QString &language);
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline Item* newItem(const QString &name, const QVariant &value)
+    QEM_INVOKABLE inline void setItem(const QString &name, const QVariant &value)
     {
-        return newItem(name, Item::Text, value);
+        m_extensions.insert(name, value);
     }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline Item* newItem(const QString &name, Item::Type type, const FileObject *file)
+    QEM_INVOKABLE inline void setItem(const QString &name, const FileObject *file)
     {
-        return newItem(name, type, QVariant::fromValue((void*)file));
+        setItem(name, QVariant::fromValue(const_cast<FileObjectPointer>(file)));
     }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Item* newItem(const QString &name, Item::Type type, const QVariant &value);
+    QEM_INVOKABLE inline bool hasItem(const QString &name) const
+    {
+        return m_extensions.contains(name);
+    }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    bool hasItem(const QString &name) const;
+    QEM_INVOKABLE QVariant getItem(const QString &name) const
+    {
+        return m_extensions.value(name);
+    }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Item* getItem(const QString &name) const;
+    QEM_INVOKABLE QVariant removeItem(const QString &name)
+    {
+        return m_extensions.take(name);
+    }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Item* removeItem(const QString &name);
+    QEM_INVOKABLE inline void clearItems()
+    {
+        m_extensions.clear();
+    }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    void clearItems();
+    QEM_INVOKABLE inline QStringList itemNames() const
+    {
+        return QStringList(m_extensions.keys());
+    }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline int itemSize() const
+    QEM_INVOKABLE inline int itemSize() const
     {
         return m_extensions.size();
-    }
-
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline ExtensionMap extensions() const
-    {
-        return m_extensions;
     }
 
 #ifdef QEM_QML_TARGET

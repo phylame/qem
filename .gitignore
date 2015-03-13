@@ -1,5 +1,4 @@
 # C++ objects and libs
-
 *.slo
 *.lo
 *.o
@@ -11,25 +10,29 @@
 *.dylib
 
 # Qt-es
-
-/.qmake.cache
-/.qmake.stash
-*.pro.user
-*.pro.user.*
+*.qmake.cache
+*.qmake.stash
+*.pro.user*
 *.moc
-moc_*.cpp
 qrc_*.cpp
 ui_*.h
 Makefile*
 *-build-*
 
+# Temporary files
 *.cache
 *.swp
 
-# QtCreator
+# Symbian target
+bld.inf
+*.sis
+*.pkg
+*.mmp
+*.loc
+*.rss
 
+# QtCreator
 *.autosave
 
 #QtCtreator Qml
-*.qmlproject.user
-*.qmlproject.user.*
+*.qmlproject.user*

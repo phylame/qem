@@ -33,11 +33,6 @@ class QVariant;
 class QEM_SHARED_EXPORT TextObject : public QObject
 {
     Q_OBJECT
-#ifdef QEM_QML_TARGET
-    Q_PROPERTY(QString text READ text)
-    Q_PROPERTY(QStringList lines READ lines)
-#endif
-
 private:
     TextObjectPrivate *p;
 public:
@@ -49,7 +44,8 @@ public:
 
     TextObject(const QString &s = QString(), QObject *parent = 0);
 
-    explicit TextObject(FileObject *file, const QByteArray &codec = QByteArray(), QObject *parent = 0);
+    explicit TextObject(FileObject *file, const QByteArray &codec = QByteArray(),
+                        QObject *parent = 0);
 
     TextObject(const TextObject &other);
 
@@ -65,43 +61,23 @@ public:
     /// Returns lines of text content split by line feed.
     QStringList lines(bool skipEmptyLine = false) const;
 
-    /// Write \a size chararcters text content to QTextStream \a out.
+    /// Writes \a size chararcters text content to QTextStream \a out.
     /** Returns copied characters number or \c -1 if occurs errors. */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     qint64 writeTo(QTextStream &out, qint64 size = -1) const;
 
-    /// Write \a size characters to QIODevice \a out with codec \a encoding.
+    /// Writes \a size characters to QIODevice \a out with codec \a encoding.
     /** Returns copied characters number or \c -1 if occurs errors. */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    qint64 writeTo(QIODevice &out, const QByteArray &encoding = QByteArray(), qint64 size = -1) const;
+    qint64 writeTo(QIODevice &out, const QByteArray &encoding =
+            QByteArray(), qint64 size = -1) const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     const QString& raw() const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     void setRaw(const QString &s);
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     FileObject* file() const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     QByteArray codec() const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     void setFile(FileObject *file, const QByteArray &codec = QByteArray());
 };
 

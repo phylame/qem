@@ -45,52 +45,35 @@ public:
     }
 
     /// Returns count of attributes.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline int attributeCount() const
+    QEM_INVOKABLE inline int attributeCount() const
     {
         return m_attributes.size();
     }
 
     /// Returns names of all attributes.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline QStringList names() const
+    QEM_INVOKABLE inline QStringList names() const
     {
         return QStringList(m_attributes.keys());
     }
 
     /// Returns \c true if contains attribute named \a name.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline bool hasAttribute(const QString &name) const
+    QEM_INVOKABLE inline bool hasAttribute(const QString &name) const
     {
         return m_attributes.contains(name);
     }
 
     /// Get attribute value by \a name.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline QVariant attribute(const QString &name, const QVariant &defaultValue = QVariant()) const
+    QEM_INVOKABLE inline QVariant attribute(const QString &name,
+                const QVariant &defaultValue = QVariant()) const
     {
         return m_attributes.value(name, defaultValue);
     }
 
     /// Set attribute \a value named \a name.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    void setAttribute(const QString &name, const QVariant &value);
+    QEM_INVOKABLE void setAttribute(const QString &name, const QVariant &value);
 
     /// Remove one attribute named \a name.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    void removeAttribute(const QString &name);
+    QEM_INVOKABLE void removeAttribute(const QString &name);
 
 signals:
     void attributeChanged(const QString &name, const QVariant &value);

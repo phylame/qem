@@ -39,18 +39,10 @@ class QByteArray;
 class QEM_SHARED_EXPORT FileObject : public QObject
 {
     Q_OBJECT
-#ifdef QEM_QML_TARGET
-    Q_PROPERTY(QString name READ name)
-    Q_PROPERTY(QString mime READ mime)
-#endif
-
 private:
-    // not (and will not be) implemented
-    FileObject(const FileObject &other);
-    // not (and will not be) implemented
-    FileObject& operator =(const FileObject &other);
+    Q_DISABLE_COPY(FileObject)
 public:
-    /// Get FileObject from QVariant \a v.
+    /// Gets FileObject from QVariant \a v.
     /**
      * \param ok Save conver state.
      */
@@ -75,35 +67,30 @@ public:
 
     /// Returns new IO device of file content.
     /** The caller need delete the pointer after using */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     virtual QIODevice* openDevice() = 0;
 
-    /// Reset to default state.
+    /// Resets to default state.
     /** The method should be called after deleting the pointer from openDevice(). */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     virtual void reset() = 0;
+
+    /// Returns number of available bytes in file content.
+    /**
+     * @return number of avaliable bytes or \c -1 if unknown.
+     */
+    virtual qint64 available()
+    { return -1; }
 
     /// Reads all available data from the file content.
     /** This method use openDevice(), so make sure openDevice() return availabe IO device. */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     virtual QByteArray readAll();
 
-    /// Copy \a size bytes to IO device \a out.
+    /// Copies \a size bytes to IO device \a out.
     /** The IO device must be writable, otherwise errors will occur when copying.
      * If \a size < 0, all bytes will be copied to \a out.
      *
      * This method use openDevice(), so make sure openDevice() return availabe IO device.
      * Returns copied bytes number or \c -1 if occurs errors.
      **/
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
     virtual qint64 copyTo(QIODevice &out, qint64 size = -1);
 private:
     QString m_mime;

@@ -15,7 +15,6 @@ HEADERS += \
     include/qem_global.h \
     include/qem.h \
     include/part.h \
-    include/item.h \
     include/fileutils.h \
     include/fileobject.h \
     include/filefactory.h \
@@ -35,7 +34,6 @@ SOURCES += \
     src/textobject.cpp \
     src/qem.cpp \
     src/part.cpp \
-    src/item.cpp \
     src/fileutils.cpp \
     src/fileobject.cpp \
     src/filefactory.cpp \

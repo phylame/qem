@@ -30,6 +30,7 @@
 #include "cli.h"
 
 
+// standard output and error
 static QTextStream cout(stdout, QIODevice::WriteOnly);
 static QTextStream cerr(stderr, QIODevice::WriteOnly);
 
@@ -269,20 +270,10 @@ static void viewProperty(const Part &part, const QString &key)
         cout << key << "=" << part.size() << endl;
     } else if (key == "items") {
         const Book &book = (Book&) part;
-        const Book::ExtensionMap &items = book.extensions();
-        for (Book::ExtensionMap::const_iterator iter=items.begin(); iter != items.end(); ++iter) {
-            const Item *item = iter.value();
-            QString value;
-            if (Item::File == item->type()) {
-                FileObject *file = (FileObject*) item->value().value<void*>();
-                if (file != 0) {
-                    value = file->name();
-                }
-            } else {
-                value = Qem::formatVariant(item->value());
-            }
-            cout << "Item: name=\"" << item->name() << "\", type=\"" << Item::typeName(item->type()) <<
-                    "\", value=\"" << value << "\"" << endl;
+        foreach (const QString &name, book.itemNames()) {
+            const QVariant &value = book.getItem(name);
+            cout << "Item: name=\"" << name << "\", type=\"" << Qem::variantType(value) <<
+                    "\", value=\"" << Qem::formatVariant(value) << "\"" << endl;
         }
     } else {
         cout << key << "=" << Qem::formatVariant(part.attribute(key)) << endl;

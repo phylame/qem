@@ -50,11 +50,11 @@ public:
     typedef void (*Cleaner)(Part &part, void *arg);
     typedef bool (*Filter)(const Part &part, void *arg);
 
-    explicit Part(const QString &title = QString(), const QString &text = QString(),
-                  QObject *parent = 0);
+    explicit Part(const QString &title = QString(), const QString &text =
+            QString(), QObject *parent = 0);
 
-    Part(const QString &title, FileObject *file, const QByteArray &codec = QByteArray(),
-         QObject *parent = 0);
+    Part(const QString &title, FileObject *file, const QByteArray &codec =
+            QByteArray(), QObject *parent = 0);
 
     Part(const QString &title, const TextObject &source, QObject *parent = 0);
 
@@ -73,111 +73,62 @@ public:
 
     virtual QStringList lines(bool skipEmptyLine = false) const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    virtual qint64 writeTo(QTextStream &out, qint64 size = -1) const;
+    QEM_INVOKABLE virtual qint64 writeTo(QTextStream &out, qint64 size = -1) const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    virtual qint64 writeTo(QIODevice &out, const QByteArray &encoding = QByteArray(),
-                                     qint64 size = -1) const;
+    QEM_INVOKABLE virtual qint64 writeTo(QIODevice &out, const QByteArray &encoding =
+            QByteArray(), qint64 size = -1) const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    virtual QString text() const;
+    QEM_INVOKABLE virtual QString text() const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    virtual void setText(const QString &text);
+    QEM_INVOKABLE virtual void setText(const QString &text);
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    virtual FileObject* file() const;
+    QEM_INVOKABLE virtual FileObject* file() const;
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    virtual void setFile(FileObject *file, const QByteArray &codec = QByteArray());
+    QEM_INVOKABLE virtual void setFile(FileObject *file, const QByteArray &codec =
+            QByteArray());
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    virtual QByteArray codec() const;
+    QEM_INVOKABLE virtual QByteArray codec() const;
 
     /// Returns depth of sub-parts tree.
     int depth() const;
 
     /// Return \c true if has sub-parts, otherwise \c false.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline bool isSection() const
+    QEM_INVOKABLE inline bool isSection() const
     {return size() != 0;}
 
     /// Create a part and set its parent to self.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Part* newPart(const QString &title, const QString &text = QString());
+    QEM_INVOKABLE Part* newPart(const QString &title, const QString &text = QString());
 
     /// Create a part and set its parent to self.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Part* newPart(const QString &title, FileObject *file, const QByteArray &codec = QByteArray());
+    QEM_INVOKABLE Part* newPart(const QString &title, FileObject *file,
+                                const QByteArray &codec = QByteArray());
 
     /// Sets sub-part \a part at index \a i and set its parent to self.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    void set(int i, Part* part);
+    QEM_INVOKABLE void set(int i, Part* part);
 
     /// Gets a sub-part with index \a i.
     /** If index is invalid, return \a defaultValue */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Part* get(int i, Part* defaultValue = 0) const;
+    QEM_INVOKABLE Part* get(int i, Part* defaultValue = 0) const;
 
     /// Add a part and set its parent to self.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    void add(Part* part);
+    QEM_INVOKABLE void add(Part* part);
 
     /// Remove part at index \a i.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    void remove(int i);
+    QEM_INVOKABLE void remove(int i);
 
     /// Insert \a part before index \a i and set its parent to self.
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    void put(int i, Part* part);
+    QEM_INVOKABLE void put(int i, Part* part);
 
     /// Index sub-part by its \a title begin index \a from.
     /** Returns index in self or \c -1 if not found. */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    int indexOf(const QString &title, int from = 0) const;
+    QEM_INVOKABLE int indexOf(const QString &title, int from = 0) const;
 
     /// Index sub-part with Filter begin index \a from.
     /** Returns index in self or \c -1 if not found.
      * \param filter Filter sub-parts, \see Filter.
      * \param arg Argument to \a filter, \see Filter.
      */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    int indexOf(Filter filter, void *arg, int from = 0) const;
+    QEM_INVOKABLE int indexOf(Filter filter, void *arg, int from = 0) const;
 
     /// Select sub-parts form self and its sub-parts if \a recursion is \c true.
     /**
@@ -186,30 +137,22 @@ public:
      * \param arg Argument to \a filter, \see Filter.
      * \param recursion If \c true search its sub-parts otherwith only search self.
      */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    void select(QList<Part*> &result, Filter filter, void *arg, bool recursion = false) const;
+    QEM_INVOKABLE void select(QList<Part*> &result, Filter filter, void *arg,
+                              bool recursion = false) const;
 
     /// Find sub-part from self and its sub-parts.
     /** Returns Part* if found otherwith \c 0.
      * \param orders Index list of the wanted part in part tree.
      * \param size Number of index in \a orders.
      */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Part* findPart(const int *orders, int size) const;
+    QEM_INVOKABLE Part* findPart(const int *orders, int size) const;
 
     /// Find sub-part from self and its sub-parts.
     /** Returns Part* if found otherwith \c 0.
      * \param orders Index list of the wanted part in part treee.
      * \param fromIndex start index in \a orders.
      */
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Part* findPart(const QList<int> &orders, int fromIndex = 0) const;
+    QEM_INVOKABLE Part* findPart(const QList<int> &orders, int fromIndex = 0) const;
 
     /// Register a clean work \a cleaner with argument \a arg.
     /** The \a cleaner will be called when destroy object. */

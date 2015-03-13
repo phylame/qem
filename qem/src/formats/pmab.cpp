@@ -247,22 +247,23 @@ static bool readPBM_V2(QXmlStreamReader &xml, QuaZip &zip, Book &book, QString *
             } else if ("item" == xml.name()) {
                 if (count < 0 || index < count) {
                     const QString &name = xml.attributes().value("name").toString();
-                    Item::Type type = Item::nameType(xml.attributes().value("type").toString());
+                    const QString &type = xml.attributes().value("type").toString().toLower();
                     if (name.isEmpty()) {
                         qWarning() << "Item name is empty";
                     } else {
-                        if (type == Item::File) {
+                        if (type == "file") {
                             // process in object
-                        } else if (type == Item::Number) {
+                            attrs = toMap(xml.attributes());
+                        } else if (type == "number") {
                             bool ok;
                             int n = xml.attributes().value("value").toString().toInt(&ok);
                             if (ok) {
-                                book.newItem(name, type, n);
+                                book.setItem(name, n);
                             } else {
                                 qWarning() << "Invalid number";
                             }
                         } else {
-                            book.newItem(name, type, xml.attributes().value("value").toString());
+                            book.setItem(name, xml.attributes().value("value").toString());
                         }
                     }
                 }
@@ -275,7 +276,7 @@ static bool readPBM_V2(QXmlStreamReader &xml, QuaZip &zip, Book &book, QString *
                     } else {
                         FileObject *file = FileFactory::getFileObject(&zip, href, attrs["media-type"], &book);
                         if (file != 0) {
-                            book.newItem(name, Item::File, file);
+                            book.setItem(name, file);
                         }
                     }
                 }

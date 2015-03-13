@@ -110,7 +110,7 @@ Book* TXT::parseTxt(QTextStream &in, const QString &title, const QString &chapte
 
     FileObject *file = FileFactory::getFileObject("text_head", tmpFile, 0, start*2, "", book);
     if (file != 0) {
-        book->newItem("text_head", Item::File, file);
+        book->setItem("text_head", file);
     } else {
         qWarning() << "Cannot create FileObject for text_head";
     }

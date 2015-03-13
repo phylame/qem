@@ -66,6 +66,8 @@ public:
     static bool convertBook(QIODevice &in, QString inFormat, const QVariantMap &parseArgs,
                             QIODevice &out, QString outFormat, const QVariantMap &makeArgs);
 
+    static QString variantType(const QVariant &v);
+
     static QString formatVariant(const QVariant &v);
 
     static void printProperties(const Part &part, QString sep, QStringList names,

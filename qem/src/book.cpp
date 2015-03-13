@@ -138,36 +138,6 @@ void Book::setLanguage(const QString &language)
     setAttribute(LANGUAGE_KEY, language);
 }
 
-Item* Book::getItem(const QString &name) const
-{
-    return m_extensions.value(name);
-}
-
-bool Book::hasItem(const QString &name) const
-{
-    return m_extensions.contains(name);
-}
-
-Item* Book::newItem(const QString &name, Item::Type type, const QVariant &value)
-{
-    Item *item = new Item(name, type, value, this);
-    m_extensions.insert(name, item);
-    return item;
-}
-
-Item* Book::removeItem(const QString &name)
-{
-    return m_extensions.take(name);
-}
-
-void Book::clearItems()
-{
-    for (ExtensionMap::const_iterator i = m_extensions.constBegin(); i != m_extensions.constEnd(); ++i) {
-        delete i.value();
-    }
-    m_extensions.clear();
-}
-
 #ifdef QEM_QML_TARGET
 void Book::fireAttributeChange(const QString &name, const QVariant &value)
 {

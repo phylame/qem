@@ -707,7 +707,7 @@ static void readContent(QDataStream &in, UmdParseData &umdData)
                     UMD::getNameOfFormat(umdData.imageFormat));
         FileObject *image = FileFactory::getFileObject(name, in.device(), offset, length, QString(),
                 book);
-        book->newItem(image->name(), Item::File, image);
+        book->setItem(image->name(), image);
     }
         break;
     case UMD::Comic:

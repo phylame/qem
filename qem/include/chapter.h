@@ -34,14 +34,17 @@ protected:
     static const QString COVER_KEY;
     static const QString INTRO_KEY;
 public:
-    explicit Chapter(const QString &title = QString(), const QString &text = QString(),
-            const FileObject *cover = 0, const TextObject &intro = TextObject(), QObject *parent = 0);
+    explicit Chapter(const QString &title = QString(), const QString &text =
+            QString(), const FileObject *cover = 0, const TextObject &intro =
+            TextObject(), QObject *parent = 0);
 
-    Chapter(const QString &title, FileObject *file, const QByteArray &codec = QByteArray(),
-            const FileObject *cover = 0, const TextObject &intro = TextObject(), QObject *parent = 0);
+    Chapter(const QString &title, FileObject *file, const QByteArray &codec =
+            QByteArray(), const FileObject *cover = 0, const TextObject &intro =
+            TextObject(), QObject *parent = 0);
 
-    Chapter(const QString &title, const TextObject &source, const FileObject *cover = 0,
-            const TextObject &intro = TextObject(), QObject *parent = 0);
+    Chapter(const QString &title, const TextObject &source,
+            const FileObject *cover = 0, const TextObject &intro = TextObject(),
+            QObject *parent = 0);
 
     inline Chapter(const Part &part) :
         Part(part)
@@ -60,55 +63,37 @@ public:
     TextObject intro() const;
     void setIntro(const TextObject &intro);
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline QString introContent() const
+    QEM_INVOKABLE inline QString introContent() const
     {
         return intro().text();
     }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline QString introText() const
+    QEM_INVOKABLE inline QString introText() const
     {
         return intro().raw();
     }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline void setIntroText(const QString &s)
+    QEM_INVOKABLE inline void setIntroText(const QString &s)
     {
         setIntro(TextObject(s));
     }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline FileObject* introFile() const
+    QEM_INVOKABLE inline FileObject* introFile() const
     {
         return intro().file();
     }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    inline void setIntroFile(FileObject *file, const QByteArray &codec = QByteArray())
+    QEM_INVOKABLE inline void setIntroFile(FileObject *file,
+                    const QByteArray &codec = QByteArray())
     {
         setIntro(TextObject(file, codec));
     }
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Chapter* newChapter(const QString &title, const QString &text = QString());
+    QEM_INVOKABLE Chapter* newChapter(const QString &title,
+                                      const QString &text = QString());
 
-#ifdef QEM_QML_TARGET
-    Q_INVOKABLE
-#endif
-    Chapter* newChapter(const QString &title, FileObject *file, const QByteArray &codec = QByteArray());
+    QEM_INVOKABLE Chapter* newChapter(const QString &title, FileObject *file,
+                                      const QByteArray &codec = QByteArray());
 
 #ifdef QEM_QML_TARGET
 signals:

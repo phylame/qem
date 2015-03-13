@@ -43,7 +43,15 @@
 #endif  // QEM_STATIC
 
 #ifndef QEM_VERSION
-# define QEM_VERSION "1.2.5"
+# define QEM_VERSION "1.3.0"
+#endif
+
+// QML target config
+#ifdef QEM_QML_TARGET
+# include <QObject>
+# define QEM_INVOKABLE Q_INVOKABLE
+#else
+# define QEM_INVOKABLE
 #endif
 
 /// Reference pointer.

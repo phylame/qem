@@ -23,10 +23,9 @@
 #include <QObject>
 #include <QMetaType>
 
-
-class QVariant;
 class QIODevice;
-class QByteArray;
+
+QEM_BEGIN_NAMESPACE
 
 /// Provides readable file content.
 /** \class FileObject fileobject.h <qem/fileobject.h>
@@ -98,6 +97,8 @@ private:
 
 typedef FileObject * FileObjectPointer;
 
-Q_DECLARE_METATYPE(FileObjectPointer)
+QEM_END_NAMESPACE
+
+Q_DECLARE_METATYPE(QEM_PREPEND_NAMESPACE(FileObjectPointer))
 
 #endif // QEM_FILEOBJECT_H

@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+#include "test"
 #include <QFile>
 #include <QMap>
 #include <QDir>

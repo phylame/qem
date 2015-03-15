@@ -21,9 +21,9 @@
 
 #include "book.h"
 
-
-class QVariant;
 class QIODevice;
+
+QEM_BEGIN_NAMESPACE
 
 class QEM_SHARED_EXPORT Qem
 {
@@ -39,29 +39,30 @@ public:
     typedef bool (*Maker)(const Book &book, QIODevice &device, const QVariantMap &args, QString *error);
 
     // paser book file
-    static void registerBookParser(const QString &format, Parser parser);
-    static bool hasBookParser(const QString &format);
+    static void registerParser(const QString &format, Parser parser);
+    static bool hasParser(const QString &format);
     static QStringList getSupportedParser();
-    static Parser getBookParser(const QString &format);
+    static Parser getParser(const QString &format);
 
     // make book file
-    static void registerBookMaker(const QString &format, Maker maker);
-    static bool hasBookMaker(const QString &format);
+    static void registerMaker(const QString &format, Maker maker);
+    static bool hasMaker(const QString &format);
     static QStringList getSupportedMaker();
-    static Maker getBookMaker(const QString &format);
+    static Maker getMaker(const QString &format);
 
     /** The caller should delete returned Book. */
     static Book* readBook(const QString &name, const QString &format = QString(),
-                   const QVariantMap &args = QVariantMap(), QString *error = 0);
+                          const QVariantMap &args = QVariantMap(), QString *error = 0);
 
     /** The caller should delete returned Book. */
     static Book* readBook(QIODevice &device, const QString &format = QString(),
-                   const QVariantMap &args = QVariantMap(), QString *error = 0);
+                          const QVariantMap &args = QVariantMap(), QString *error = 0);
 
     static bool writeBook(const Book &book, const QString &name, const QString &format = QString(),
-                    const QVariantMap &args = QVariantMap(), QString *error = 0);
+                          const QVariantMap &args = QVariantMap(), QString *error = 0);
+
     static bool writeBook(const Book &book, QIODevice &device, const QString &format = QString(),
-                    const QVariantMap &args = QVariantMap(), QString *error = 0);
+                          const QVariantMap &args = QVariantMap(), QString *error = 0);
 
     static bool convertBook(QIODevice &in, QString inFormat, const QVariantMap &parseArgs,
                             QIODevice &out, QString outFormat, const QVariantMap &makeArgs);
@@ -71,7 +72,7 @@ public:
     static QString formatVariant(const QVariant &v);
 
     static void printProperties(const Part &part, QString sep, QStringList names,
-                                          bool showBrackets = true, QTextStream *out = 0);
+                                bool showBrackets = true, QTextStream *out = 0);
 
     // return false to stop walking
     typedef bool (*Walker)(Part &p);
@@ -79,5 +80,7 @@ public:
     static void walkPart(Part &part, Walker walker);
 
 };
+
+QEM_END_NAMESPACE
 
 #endif // QEM_H

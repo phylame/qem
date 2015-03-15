@@ -32,6 +32,9 @@ class QuaZip;
 class QIODevice;
 class QDataStream;
 class QTextStream;
+
+QEM_BEGIN_NAMESPACE
+
 class FileObject;
 
 /// Utility class for file operations.
@@ -96,24 +99,29 @@ public:
     static qint64 copy(QTextStream &in, QTextStream &out, qint64 size = -1);
 
     /// Read bytes from ZIP archive.
-    static QByteArray readZipData(QuaZip &zip, const QString &entryName, const char *password = 0);
+    static QByteArray readZipData(QuaZip &zip, const QString &entryName,
+                                  const char *password = 0);
 
     /// Write bytes to ZIP archive.
     static bool writeZipData(QuaZip &zip, const QString &entryName, const QByteArray &data,
                              const char *password = 0);
 
-    static bool writeToZip(FileObject &fb, QuaZip &zip, const QString &entryName, const char *password = 0);
+    static bool writeToZip(FileObject &fb, QuaZip &zip, const QString &entryName,
+                           const char *password = 0);
 
-    static bool writeToZip(QIODevice &device, QuaZip &zip, const QString &entryName, const char *password = 0);
+    static bool writeToZip(QIODevice &device, QuaZip &zip, const QString &entryName,
+                           const char *password = 0);
 
     static QString readZipText(QuaZip &zip, const QString &entryName,
                                const QByteArray &codec = QByteArray(),
                                const char *password = 0);
 
     static bool writeZipText(QuaZip &zip, const QString &entryName,
-                                const QString &text,
-                                const QByteArray &codec = QByteArray(),
-                                const char *password = 0);
+                             const QString &text,
+                             const QByteArray &codec = QByteArray(),
+                             const char *password = 0);
 };
+
+QEM_END_NAMESPACE
 
 #endif // QEM_FILEUTILS_H

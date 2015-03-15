@@ -24,6 +24,7 @@
 #include <QIODevice>
 #include <QTextStream>
 
+QEM_BEGIN_NAMESPACE
 
 class TextObjectPrivate
 {
@@ -224,3 +225,5 @@ void TextObject::setFile(FileObject *file, const QByteArray &codec)
         p->codec = codec;
     }
 }
+
+QEM_END_NAMESPACE

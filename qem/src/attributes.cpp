@@ -20,6 +20,7 @@
 #include <fileobject.h>
 #include <textobject.h>
 
+QEM_BEGIN_NAMESPACE
 
 void Attributes::setAttribute(const QString &name, const QVariant &value)
 {
@@ -38,6 +39,9 @@ void Attributes::setAttribute(const QString &name, const QVariant &value)
 void Attributes::removeAttribute(const QString &name)
 {
     if (m_attributes.contains(name)) {
-        emit attributeRemoved(name, m_attributes.take(name));
+        m_attributes.remove(name);
+        emit attributeRemoved(name);
     }
 }
+
+QEM_END_NAMESPACE

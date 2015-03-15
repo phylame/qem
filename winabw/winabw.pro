@@ -4,7 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core
+# for Qt 5.x
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = winabw
 TEMPLATE = app

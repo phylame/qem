@@ -21,35 +21,40 @@
 
 #include "book.h"
 
+QEM_BEGIN_NAMESPACE
 
-class QEM_SHARED_EXPORT TXT
+namespace txt
 {
-private:
-    TXT();
-public:
-    /// Name of this book format.
-    static const QString FORMAT_NAME;
+    class QEM_SHARED_EXPORT TXT
+    {
+    private:
+        Q_DISABLE_COPY(TXT)
+    public:
+        /// Name of this book format.
+        static const QString FORMAT_NAME;
 
-    static QByteArray TextEncoding;
-    static QString ParagraphHeader;
-    static QString TextLineFeed;
-    static QString ChapterRegex;
+        static QByteArray TextEncoding;
+        static QString ParagraphHeader;
+        static QString TextLineFeed;
+        static QString ChapterRegex;
 
-    static Book* parseTxt(QIODevice &device, const QVariantMap &args = QVariantMap(), QString *error = 0);
+        static Book* parseTxt(QIODevice &device, const QVariantMap &args = QVariantMap(), QString *error = 0);
 
-    static Book* parseTxt(QTextStream &in, const QString &title, const QString &chapterRegex,
-                          QString *error = 0);
+        static Book* parseTxt(QTextStream &in, const QString &title, const QString &chapterRegex,
+                              QString *error = 0);
 
-    static bool makeTxt(const Book &book, QIODevice &device, const QVariantMap &args = QVariantMap(),
-                        QString *error = 0);
+        static bool makeTxt(const Book &book, QIODevice &device, const QVariantMap &args = QVariantMap(),
+                            QString *error = 0);
 
-    static bool makeTxt(const Book &book, QTextStream &out, const QVariantMap &args = QVariantMap(),
-                        QString *error = 0);
+        static bool makeTxt(const Book &book, QTextStream &out, const QVariantMap &args = QVariantMap(),
+                            QString *error = 0);
 
-    static bool makeTxt(const Book &book, QTextStream &out, const QByteArray &encoding,
-                        const QString &lineFeed, const QString &paraStart, bool skipEmptyLine = false,
-                        QString *error = 0);
+        static bool makeTxt(const Book &book, QTextStream &out, const QByteArray &encoding,
+                            const QString &lineFeed, const QString &paraStart, bool skipEmptyLine = false,
+                            QString *error = 0);
+    };
+}   // txt
 
-};
+QEM_END_NAMESPACE
 
 #endif // QEM_TXT_H

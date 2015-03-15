@@ -11,7 +11,7 @@ QT       += xml
 QT       -= gui
 
 # Qem version
-VERSION = 1.3.0
+VERSION = 1.3.1
 DEFINES += QEM_VERSION=\\\"$$VERSION\\\"
 
 
@@ -23,7 +23,7 @@ CONFIG(staticlib): DEFINES += QEM_STATIC
 DEFINES += QEM_BUILD
 
 # This defined for enable QML property, enums and invokable function.
-DEFINES += QEM_QML_TARGET
+#DEFINES += QEM_QML_TARGET
 
 # Input
 include(qem.pri)

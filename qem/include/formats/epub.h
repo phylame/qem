@@ -30,174 +30,181 @@
 
 class QuaZip;
 
-struct EpubMakeConfig
+QEM_BEGIN_NAMESPACE
+
+namespace epub
 {
-    /// Directory of OPS(Open eBook Publication Structure)
-    QString opsDir;
-    /// Directory for storing book text.
-    QString textDir;
-    /// Directory for storing images.
-    QString imageDir;
-    /// Directory for storing styles files.
-    QString styleDir;
-    /// Encoding for all XML files.
-    QByteArray xmlEncoding;
-    /// Encoding for all HTML files.
-    QByteArray htmlEncoding;
-    /// ZIP compression method.
-    int compressionMethod;
-    /// ZIP compression level.
-    int compressionLevel;
-    /// main CSS file
-    QString cssFile;
-    /// CSS class name if main CSS file.
-    QString coverStyle;
+    struct EpubMakeConfig
+    {
+        /// Directory of OPS(Open eBook Publication Structure)
+        QString opsDir;
+        /// Directory for storing book text.
+        QString textDir;
+        /// Directory for storing images.
+        QString imageDir;
+        /// Directory for storing styles files.
+        QString styleDir;
+        /// Encoding for all XML files.
+        QByteArray xmlEncoding;
+        /// Encoding for all HTML files.
+        QByteArray htmlEncoding;
+        /// ZIP compression method.
+        int compressionMethod;
+        /// ZIP compression level.
+        int compressionLevel;
+        /// main CSS file
+        QString cssFile;
+        /// CSS class name if main CSS file.
+        QString coverStyle;
 
-    QString introTitleStyle;
-    QString introContentStyle;
+        QString introTitleStyle;
+        QString introContentStyle;
 
-    inline EpubMakeConfig(const QString &opsDir, const QString &textDir, const QString &imageDir,
-                          const QString &styleDir, const QByteArray &xmlEncoding = QByteArray(),
-                          const QByteArray &htmlEncoding = QByteArray()) :
-        opsDir(opsDir), textDir(textDir), imageDir(imageDir), styleDir(styleDir), xmlEncoding(xmlEncoding),
-        htmlEncoding(htmlEncoding), compressionMethod(Z_DEFLATED), compressionLevel(Z_DEFAULT_COMPRESSION),
-        cssFile(":/mainCSS"), coverStyle("cover_div"), introTitleStyle("book_title_div"),
-        introContentStyle("book_intro_div")
-    {}
-};
+        inline EpubMakeConfig(const QString &opsDir, const QString &textDir, const QString &imageDir,
+                              const QString &styleDir, const QByteArray &xmlEncoding = QByteArray(),
+                              const QByteArray &htmlEncoding = QByteArray()) :
+            opsDir(opsDir), textDir(textDir), imageDir(imageDir), styleDir(styleDir), xmlEncoding(xmlEncoding),
+            htmlEncoding(htmlEncoding), compressionMethod(Z_DEFLATED), compressionLevel(Z_DEFAULT_COMPRESSION),
+            cssFile(":/mainCSS"), coverStyle("cover_div"), introTitleStyle("book_title_div"),
+            introContentStyle("book_intro_div")
+        {}
+    };
 
-class QEM_SHARED_EXPORT EPUB
-{
-private:
-    EPUB();
-public:
-    /// Name of this book format.
-    static const QString FORMAT_NAME;
+    class QEM_SHARED_EXPORT EPUB
+    {
+    private:
+        EPUB();
+    public:
+        /// Name of this book format.
+        static const QString FORMAT_NAME;
 
-    ///// MIME type for EPUB /////
-    static const QString MIMETYPE_FILE;
-    static const QByteArray MT_EPUB;
+        ///// MIME type for EPUB /////
+        static const QString MIMETYPE_FILE;
+        static const QByteArray MT_EPUB;
 
-    // container.xml
-    static const QString CONTAINER_FILE;
-    static const QString CONTAINER_XML_NS;
-    static const QString CONTAINER_VERSION;
+        // container.xml
+        static const QString CONTAINER_FILE;
+        static const QString CONTAINER_XML_NS;
+        static const QString CONTAINER_VERSION;
 
-    // CSS
-    static QString CssSource;
+        // CSS
+        static QString CssSource;
 
-    static QString CssFileName;
-    static QString CssFileID;
-    static const QString MT_CSS;
+        static QString CssFileName;
+        static QString CssFileID;
+        static const QString MT_CSS;
 
-    // the Open Packaging Format (OPF)
-    static QString OpfFileName;
-    static const QString MT_OPF;
-    static const QString OPF_XML_NS;
-    static const QString OPF_VERSION_2;
+        // the Open Packaging Format (OPF)
+        static QString OpfFileName;
+        static const QString MT_OPF;
+        static const QString OPF_XML_NS;
+        static const QString OPF_VERSION_2;
 
-    // Dublin Core Metadata Initiative (DCMI)
-    static const QString DC_XML_NS;
+        // Dublin Core Metadata Initiative (DCMI)
+        static const QString DC_XML_NS;
 
-    // dc:identifier element name
-    static QString IdentifierName;
+        // dc:identifier element name
+        static QString IdentifierName;
 
-    // XML Schema instance
-    //    static const QString XSI_XML_NS = "http://www.w3.org/2001/XMLSchema-instance";
+        // XML Schema instance
+        //    static const QString XSI_XML_NS = "http://www.w3.org/2001/XMLSchema-instance";
 
-    // the Navigation Center eXtended (NCX)
-    static QString NcxFileName;
-    static QString NcxFileId;
+        // the Navigation Center eXtended (NCX)
+        static QString NcxFileName;
+        static QString NcxFileId;
 
-    static const QString MT_NCX;
-    static const QString NCX_XML_DT;
-    static const QString NCX_DT_ID;
-    static const QString NCX_DT_URI;
-    static const QString NCX_XML_NS;
-    static const QString NCX_VERSION;
+        static const QString MT_NCX;
+        static const QString NCX_XML_DT;
+        static const QString NCX_DT_ID;
+        static const QString NCX_DT_URI;
+        static const QString NCX_XML_NS;
+        static const QString NCX_VERSION;
 
-    //// Book cover image id
-    static QString CoverFileID;
+        //// Book cover image id
+        static QString CoverFileID;
 
-    // *******************
-    // ** Book cover page
-    // *******************
-    static QString CoverPageTitle;
-    static QString CoverPageFileName;
-    static QString CoverPageFileId;
-    /* CSS */
-    static QString CoverPageImageStyle;
-
-
-    // *******************
-    // ** Book intro page
-    // *******************
-    static QString BookIntroText;
-    static QString IntroPageTitle;
-    static QString IntroPageFileName;
-    static QString IntroPageFileId;
-    /* CSS */
-    static QString IntroPageTitleStyle;
-    static QString IntroPageTextStyle;
+        // *******************
+        // ** Book cover page
+        // *******************
+        static QString CoverPageTitle;
+        static QString CoverPageFileName;
+        static QString CoverPageFileId;
+        /* CSS */
+        static QString CoverPageImageStyle;
 
 
-    // *************************
-    // ** Book information page
-    // *************************
-    static QString InfoPageTitle;
-    static QString InfoPageFileName;
-    static QString InfoPageFileId;
-    /* CSS */
-    static QString InfoPageTextStyle;
+        // *******************
+        // ** Book intro page
+        // *******************
+        static QString BookIntroText;
+        static QString IntroPageTitle;
+        static QString IntroPageFileName;
+        static QString IntroPageFileId;
+        /* CSS */
+        static QString IntroPageTitleStyle;
+        static QString IntroPageTextStyle;
 
-    // ******************
-    // ** Book TOC page
-    // ******************
-    static QString TocPageTitle;
-    static QString TocPageFileName;
-    static QString TocPageFileId;
-    /* CSS */
-    static QString TocPageTitleStyle;
-    static QString TocPageTextStyle;
 
-    // last at the TOC HTML
-    static QString BackToParentText;
+        // *************************
+        // ** Book information page
+        // *************************
+        static QString InfoPageTitle;
+        static QString InfoPageFileName;
+        static QString InfoPageFileId;
+        /* CSS */
+        static QString InfoPageTextStyle;
 
-    // ********************
-    // ** Book index page
-    // ********************
-    static QString IndexPageTitle;
-    static QString IndexPageFileName;
-    static QString IndexPageFileId;
+        // ******************
+        // ** Book TOC page
+        // ******************
+        static QString TocPageTitle;
+        static QString TocPageFileName;
+        static QString TocPageFileId;
+        /* CSS */
+        static QString TocPageTitleStyle;
+        static QString TocPageTextStyle;
 
-    /// Date format for metadata field.
-    static const QString DATE_FORMAT;
+        // last at the TOC HTML
+        static QString BackToParentText;
 
-    static const QString MT_XHTML;
-    static const QString XHTML_NS;
-    static const QString XHTML_DT;
-    static const QString XHTML_DT_ID;
-    static const QString XHTML_DT_URI;
+        // ********************
+        // ** Book index page
+        // ********************
+        static QString IndexPageTitle;
+        static QString IndexPageFileName;
+        static QString IndexPageFileId;
 
-    static const QString DUOKAN_FULL_SCREEN;
+        /// Date format for metadata field.
+        static const QString DATE_FORMAT;
 
-    /// Default EpubMakeConfig for ePub maker.
-    static const EpubMakeConfig DefaultMakeConfig;
+        static const QString MT_XHTML;
+        static const QString XHTML_NS;
+        static const QString XHTML_DT;
+        static const QString XHTML_DT_ID;
+        static const QString XHTML_DT_URI;
 
-    /// Test given ZIP is ePub archive or not.
-    static bool isEpub(QuaZip &zip);
+        static const QString DUOKAN_FULL_SCREEN;
 
-    /// Qem Parser interface.
-    static Book* parseEpub(QIODevice &device, const QVariantMap &args = QVariantMap(), QString *error = 0);
+        /// Default EpubMakeConfig for ePub maker.
+        static const EpubMakeConfig DefaultMakeConfig;
 
-    static Book* parseEpub(QuaZip &zip, QString *error = 0);
+        /// Test given ZIP is ePub archive or not.
+        static bool isEpub(QuaZip &zip);
 
-    /// Qem Maker interface.
-    static bool makeEpub(const Book &book, QIODevice &device, const QVariantMap &args = QVariantMap(),
-                         QString *error = 0);
+        /// Qem Parser interface.
+        static Book* parseEpub(QIODevice &device, const QVariantMap &args = QVariantMap(), QString *error = 0);
 
-    static bool makeEpub(const Book &book, QuaZip &zip, const QString &version = QString("2"),
-                         const EpubMakeConfig &config = DefaultMakeConfig, QString *error = 0);
-};
+        static Book* parseEpub(QuaZip &zip, QString *error = 0);
+
+        /// Qem Maker interface.
+        static bool makeEpub(const Book &book, QIODevice &device, const QVariantMap &args = QVariantMap(),
+                             QString *error = 0);
+
+        static bool makeEpub(const Book &book, QuaZip &zip, const QString &version = QString("2"),
+                             const EpubMakeConfig &config = DefaultMakeConfig, QString *error = 0);
+    };
+}   // epub
+
+QEM_END_NAMESPACE
 
 #endif // QEM_EPUB_H

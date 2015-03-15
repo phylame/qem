@@ -3,10 +3,10 @@ TEMPLATE = subdirs
 SUBDIRS += \
     3rdparty/quazip \
     qem \
-    qemtest \
+#    qemtest \
     scq \
 #    symabw
-    winabw
+#    winabw
 
 #qem.depends = quazip
 #qemtest.depends = qem

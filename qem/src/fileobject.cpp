@@ -23,6 +23,7 @@
 #include <QIODevice>
 #include <QByteArray>
 
+QEM_BEGIN_NAMESPACE
 
 FileObject* FileObject::fromQVariant(const QVariant &v, bool *ok)
 {
@@ -58,3 +59,5 @@ qint64 FileObject::copyTo(QIODevice &out, qint64 size)
     reset();
     return total;
 }
+
+QEM_END_NAMESPACE

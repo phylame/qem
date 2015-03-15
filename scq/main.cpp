@@ -24,11 +24,12 @@
 #include <QRegExp>
 #include <QFile>
 #include <QDir>
+#include <qem.h>
 #include <fileutils.h>
 #include <filefactory.h>
-#include <qem.h>
 #include "cli.h"
 
+QEM_USE_NAMESPACE
 
 // standard output and error
 static QTextStream cout(stdout, QIODevice::WriteOnly);
@@ -60,10 +61,10 @@ static QVariantMap parseValues(const QStringList &values)
 
 static void showVersion()
 {
-    cout << "SCI of Qem " << QCoreApplication::applicationVersion()
+    cout << "SCI for Qem " << QCoreApplication::applicationVersion()
         << " by " << QObject::tr("PW") << endl;
-    cout << "Qem: " << Qem::VERSION << endl;
-    cout << QObject::tr("Copyright (C) 2014-2015 PW") << endl;
+    cout << "Qem core: " << Qem::VERSION << endl;
+    cout << QObject::tr("Copyright (C) 2014-2015 Peng Wan, PW") << endl;
 }
 
 static void showHelp()
@@ -86,7 +87,7 @@ static void showHelp()
     cout << QString("    %1").arg("", -18) << QString("all:    ") << QObject::tr("Print all properties(default)") << endl;
     cout << QString("    %1").arg("", -18) << QString("all_names:    ") << QObject::tr("Print available names") << endl;
     cout << QString("    %1").arg("", -18) << QString("items:    ") << QObject::tr("Print all items of book") << endl;
-    cout << QString("    %1").arg("", -18) << QString("chapters:    ") << QObject::tr("Print tree of chapters") << endl;
+    cout << QString("    %1").arg("", -18) << QString("toc:    ") << QObject::tr("Print tree of TOC (table of contents)") << endl;
     cout << QString("    %1").arg("", -18) << QString("chapterN.N..N%1name:    ").arg(ORDER_SEPARATOR) <<
             QObject::tr("Print chapter properties") << endl;
     cout << QString("    %1").arg("", -18) << QString("title, author, genre, publisher, size...") << endl;
@@ -131,7 +132,7 @@ static void setProperties(Book *book, const QVariantMap &properties)
         const QString &key = i.key();
         const QVariant &v = i.value();
         if (key == "cover") {
-            FileObject *cover = FileFactory::getFileObject(v.toString(), "", book);
+            FileObject *cover = FileFactory::getFile(v.toString(), "", book);
             if (0 == cover) {
                 printError(QObject::tr("Not found image: ")) << v.toString() << endl;
             } else {
@@ -237,7 +238,7 @@ static void walkPart(const Part &part, const QString &path, bool showBookAttr = 
                      bool showChapterAttr = true, bool showOrder = true)
 {
     if (showBookAttr) {
-        Qem::printProperties(part, "\n", part.names(), false, &cout);
+        Qem::printProperties(part, "\n", part.attributeNames(), false, &cout);
     }
     cout << QObject::tr("Contents of ") << "\"" << part.title() << "\"";
     if (! path.isEmpty()) {
@@ -263,9 +264,9 @@ static void viewProperty(const Part &part, const QString &key)
             cout << part.content() << endl;
         }
     } else if (key == "all_names") {
-        cout << part.title() << ": " << QStringList(part.names()).join(", ") << endl;
+        cout << part.title() << ": " << QStringList(part.attributeNames()).join(", ") << endl;
     } else if (key == "all") {
-        Qem::printProperties(part, "\n", part.names(), false, &cout);
+        Qem::printProperties(part, "\n", part.attributeNames(), false, &cout);
     } else if (key == "size") {
         cout << key << "=" << part.size() << endl;
     } else if (key == "items") {
@@ -315,7 +316,7 @@ void viewPart(const Part &part, const QString &path, const QStringList &names)
 {
     QRegExp regex("chapter(\\-?[\\d]+\\.)*\\-?[\\d]*(\\$.*)?");
     foreach (const QString &name, names) {
-        if ("chapters" == name) {
+        if ("toc" == name) {
             walkPart(part, path, false, true, true);
         } else if (regex.exactMatch(name)) {
             splitOrder(part, QString(name).replace("chapter", ""));

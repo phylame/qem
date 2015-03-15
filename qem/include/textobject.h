@@ -24,11 +24,12 @@
 #include <QMetaType>
 #include <QStringList>
 
-
-class TextObjectPrivate;
 class QTextStream;
 class QIODevice;
-class QVariant;
+
+QEM_BEGIN_NAMESPACE
+
+class TextObjectPrivate;
 
 class QEM_SHARED_EXPORT TextObject : public QObject
 {
@@ -67,8 +68,8 @@ public:
 
     /// Writes \a size characters to QIODevice \a out with codec \a encoding.
     /** Returns copied characters number or \c -1 if occurs errors. */
-    qint64 writeTo(QIODevice &out, const QByteArray &encoding =
-            QByteArray(), qint64 size = -1) const;
+    qint64 writeTo(QIODevice &out, const QByteArray &encoding = QByteArray(),
+                   qint64 size = -1) const;
 
     const QString& raw() const;
 
@@ -81,7 +82,8 @@ public:
     void setFile(FileObject *file, const QByteArray &codec = QByteArray());
 };
 
+QEM_END_NAMESPACE
 
-Q_DECLARE_METATYPE(TextObject)
+Q_DECLARE_METATYPE(QEM_PREPEND_NAMESPACE(TextObject))
 
 #endif // QEM_TEXTOBJECT_H

@@ -19,8 +19,9 @@
 #ifndef QEM_GLOBAL_H
 #define QEM_GLOBAL_H
 
-#include <QtCore/qglobal.h>
-
+#ifndef QEM_VERSION
+# define QEM_VERSION "1.3.1"
+#endif
 
 /**
   This is automatically defined when building a static library, but when
@@ -42,9 +43,33 @@
 #endif
 #endif  // QEM_STATIC
 
-#ifndef QEM_VERSION
-# define QEM_VERSION "1.3.0"
-#endif
+#ifndef QEM_NAMESPACE   /* no namespace */
+
+# define QEM_PREPEND_NAMESPACE(name) ::name
+# define QEM_USE_NAMESPACE
+# define QEM_USE_TYPE(name)
+# define QEM_BEGIN_NAMESPACE
+# define QEM_END_NAMESPACE
+# define QEM_FORWARD_DECLARE_CLASS(name) class name;
+# define QEM_FORWARD_DECLARE_STRUCT(name) struct name;
+
+#else   /* using namespace */
+
+# define QEM_PREPEND_NAMESPACE(name) ::QEM_NAMESPACE::name
+# define QEM_USE_NAMESPACE using namespace ::QEM_NAMESPACE;
+# define QEM_USE_TYPE(name) using QEM_PREPEND_NAMESPACE(name);
+# define QEM_BEGIN_NAMESPACE namespace QEM_NAMESPACE {
+# define QEM_END_NAMESPACE }
+# define QEM_FORWARD_DECLARE_CLASS(name) \
+    QEM_BEGIN_NAMESPACE class name; QEM_END_NAMESPACE \
+    using QEM_PREPEND_NAMESPACE(name);
+# define QEM_FORWARD_DECLARE_STRUCT(name) \
+    QEM_BEGIN_NAMESPACE struct name; QEM_END_NAMESPACE \
+    using QEM_PREPEND_NAMESPACE(name);
+
+#endif  /* qem namespace */
+
+#include <QtCore/qglobal.h>
 
 // QML target config
 #ifdef QEM_QML_TARGET
@@ -53,6 +78,8 @@
 #else
 # define QEM_INVOKABLE
 #endif
+
+QEM_BEGIN_NAMESPACE
 
 /// Reference pointer.
 template<class T> struct ref_ptr
@@ -75,5 +102,7 @@ template<class T> struct ref_ptr
         }
     }
 };
+
+QEM_END_NAMESPACE
 
 #endif // QEM_GLOBAL_H

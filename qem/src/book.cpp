@@ -18,6 +18,7 @@
 
 #include <book.h>
 
+QEM_BEGIN_NAMESPACE
 
 const QString Book::AUTHOR_KEY("author");
 const QString Book::GENRE_KEY("genre");
@@ -158,11 +159,11 @@ void Book::fireAttributeChange(const QString &name, const QVariant &value)
     } else if (LANGUAGE_KEY == name) {
         emit languageChanged(value.toString());
     } else {
-        Chapter::fireAttributeRemove(name, value);
+        Chapter::fireAttributeChange(name, value);
     }
 }
 
-void Book::fireAttributeRemove(const QString &name, const QVariant &value)
+void Book::fireAttributeRemove(const QString &name)
 {
     if (AUTHOR_KEY == name) {
         emit authorChanged(QString());
@@ -181,8 +182,10 @@ void Book::fireAttributeRemove(const QString &name, const QVariant &value)
     } else if (LANGUAGE_KEY == name) {
         emit languageChanged(QString());
     } else {
-        Chapter::fireAttributeRemove(name, value);
+        Chapter::fireAttributeRemove(name);
     }
 }
 
-#endif
+#endif  // QEM_QML_TARGET
+
+QEM_END_NAMESPACE

@@ -29,69 +29,57 @@
 
 class QuaZip;
 
-class QEM_SHARED_EXPORT PMAB
+QEM_BEGIN_NAMESPACE
+
+namespace pmab
 {
-private:
-    PMAB();
-public:
-    /// Name of this book format.
-    static const QString FORMAT_NAME;
+    class QEM_SHARED_EXPORT PMAB
+    {
+    private:
+        Q_DISABLE_COPY(PMAB)
+    public:
+        /// Name of this book format.
+        static const QString FORMAT_NAME;
 
-    ///// MIME type for PMAB /////
-    static const QString MIMETYPE_FILE;
-    static const QByteArray MT_PMAB;
+        /** Content directory in PMAB */
+        static QString TextDir;
+        static QString ImageDir;
+        static QString ExtraDir;
 
-    ///// PBM(PMAB Book Metadata) /////
-    static const QString PBM_FILE;
-    static const QString PBM_XML_NS;
-    static const QString PBM_XML_ROOT_NAME_V1;
-    static const QString PBM_XML_ROOT_NAME_V2;
+        /** Text encoding for chapter and item */
+        static QByteArray TextEncoding;
 
-    ///// PBC(PMAB Book Content) /////
-    static const QString PBC_FILE;
-    static const QString PBC_XML_NS;
-    static const QString PBC_XML_ROOT_NAME_V1;
-    static const QString PBC_XML_ROOT_NAME_V2;
+        ///// XML format //////
+        static QString XmlEncoding;
+        static QString XmlIndent;
+        static QString XmlLineFeed;
 
-    /** Content directory in PMAB */
-    static QString TextDir;
-    static QString ImageDir;
-    static QString ExtraDir;
+        // default output PMAB version
+        static QString InitPbmVersion;
+        static QString InitPbcVersion;
 
-    /** Text encoding for chapter and item */
-    static QByteArray TextEncoding;
-
-    /** Date format in PBM */
-    static const QString DATE_FORMAT;
-
-    ///// XML format //////
-    static QString XmlEncoding;
-    static QString XmlIndent;
-    static QString XmlLineFeed;
-
-    // default output PMAB version
-    static QString InitPbmVersion;
-    static QString InitPbcVersion;
-
-    /// Set one attribute in PMAB to Qem book.
-    /**
+        /// Set one attribute in PMAB to Qem book.
+        /**
      * \param book the Book instance
      * \param key name of the attribute
      * \param value string value from PBM document
      */
-    static void setAttribute(Book &book, const QString &key, const QString &value);
+        static void setAttribute(Book &book, const QString &key, const QString &value);
 
-    /// Test given ZIP is PMAB archive or not.
-    static bool isPmab(QuaZip &zip);
+        /// Test given ZIP is PMAB archive or not.
+        static bool isPmab(QuaZip &zip);
 
-    /// Qem Parser interface.
-    static Book* parsePmab(QIODevice &device, const QVariantMap &args = QVariantMap(), QString *error = 0);
+        /// Qem Parser interface.
+        static Book* parsePmab(QIODevice &device, const QVariantMap &args = QVariantMap(), QString *error = 0);
 
-    static Book* parsePmab(QuaZip &zip, QString *error = 0);
+        static Book* parsePmab(QuaZip &zip, QString *error = 0);
 
-    /// Qem Maker interface.
-    static bool makePmab(const Book &book, QIODevice &device, const QVariantMap &args = QVariantMap(),
-                         QString *error = 0);
-};
+        /// Qem Maker interface.
+        static bool makePmab(const Book &book, QIODevice &device, const QVariantMap &args = QVariantMap(),
+                             QString *error = 0);
+    };
+}   // pmab
+
+QEM_END_NAMESPACE
 
 #endif // QEM_PMABUTILS_H

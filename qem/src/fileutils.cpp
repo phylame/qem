@@ -28,6 +28,7 @@
 #include <quazipfile.h>
 #include <quazipnewinfo.h>
 
+QEM_BEGIN_NAMESPACE
 
 QString FileUtils::extensionName(const QString &name)
 {
@@ -271,3 +272,5 @@ bool FileUtils::writeZipText(QuaZip &zip, const QString &entryName, const QStrin
     }
     return writeZipData(zip, entryName, tc->fromUnicode(text), password);
 }
+
+QEM_END_NAMESPACE

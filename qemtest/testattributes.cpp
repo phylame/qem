@@ -17,8 +17,9 @@
  */
 
 #include "testattributes.h"
-#include "attributes.h"
+#include <attributes.h>
 
+QEM_USE_NAMESPACE
 
 TestAttributes::TestAttributes()
 {
@@ -28,7 +29,7 @@ void TestAttributes::setAttribute()
 {
     Attributes attr;
     connect(&attr, SIGNAL(attributeChanged(QString,QVariant)), this, SLOT(onChange(QString,QVariant)));
-    connect(&attr, SIGNAL(attributeRemoved(QString,QVariant)), this, SLOT(onRemove(QString,QVariant)));
+    connect(&attr, SIGNAL(attributeRemoved(QString)), this, SLOT(onRemove(QString)));
     QVERIFY(attr.attributeCount() == 0);
     attr.setAttribute("Name", "PW");
     QVERIFY(attr.attributeCount() == 1);
@@ -41,7 +42,7 @@ void TestAttributes::getAttribute()
 {
     Attributes attr;
     connect(&attr, SIGNAL(attributeChanged(QString,QVariant)), this, SLOT(onChange(QString,QVariant)));
-    connect(&attr, SIGNAL(attributeRemoved(QString,QVariant)), this, SLOT(onRemove(QString,QVariant)));
+    connect(&attr, SIGNAL(attributeRemoved(QString)), this, SLOT(onRemove(QString)));
     QVERIFY(attr.attributeCount() == 0);
     attr.setAttribute("Name", "PW");
     QVERIFY(attr.attributeCount() == 1);
@@ -52,15 +53,13 @@ void TestAttributes::removeAttribute()
 {
     Attributes attr;
     connect(&attr, SIGNAL(attributeChanged(QString,QVariant)), this, SLOT(onChange(QString,QVariant)));
-    connect(&attr, SIGNAL(attributeRemoved(QString,QVariant)), this, SLOT(onRemove(QString,QVariant)));
+    connect(&attr, SIGNAL(attributeRemoved(QString)), this, SLOT(onRemove(QString)));
     QVERIFY(attr.attributeCount() == 0);
     attr.setAttribute("Name", "PW");
     QVERIFY(attr.attributeCount() == 1);
     reset();
     attr.removeAttribute("Name");
     QCOMPARE(m_name, QString("Name"));
-    QVERIFY(m_value.type() == QVariant::String);
-    QCOMPARE(m_value.toString(), QString("PW"));
     QVERIFY(attr.attributeCount() == 0);
 }
 
@@ -71,10 +70,9 @@ void TestAttributes::onChange(const QString &name, const QVariant &v)
     m_value = v;
 }
 
-void TestAttributes::onRemove(const QString &name, const QVariant &v)
+void TestAttributes::onRemove(const QString &name)
 {
     qDebug() << "remove attr";
     m_name = name;
-    m_value = v;
 }
 

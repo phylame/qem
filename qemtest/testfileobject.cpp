@@ -16,14 +16,16 @@
  * limitations under the License.
  */
 
+#include "testfileobject.h"
+#include <filefactory.h>
 #include <QDir>
 #include <QFile>
 #include <QBuffer>
 #include <QDataStream>
-#include "filefactory.h"
-#include "testfileobject.h"
 #include <quazipfile.h>
 #include <quazipnewinfo.h>
+
+QEM_USE_NAMESPACE
 
 
 TestFileObject::TestFileObject(){
@@ -45,7 +47,7 @@ void TestFileObject::testNormalFile()
     const QByteArray data("write some bytes");
     file.write(data);
     file.close();
-    FileObject *bf = FileFactory::getFileObject(name, 0);
+    FileObject *bf = FileFactory::getFile(name, 0);
     QVERIFY(bf != 0);
     QCOMPARE(bf->name(), name);
     QCOMPARE(bf->mime(), QString("text/plain"));
@@ -73,7 +75,7 @@ void TestFileObject::testPartFile()
     QByteArray data("write some bytes");
     file.write(data);
     QVERIFY(file.seek(0));
-    FileObject *bf = FileFactory::getFileObject(file.fileName(), &file, 6, 4, 0);
+    FileObject *bf = FileFactory::getFile(file.fileName(), &file, 6, 4, 0);
     QVERIFY(bf != 0);
     QByteArray buf;
     READ_ALL(bf, buf);
@@ -102,7 +104,7 @@ void TestFileObject::testZipFile()
     file.write("Hellow");
     zip.close();
     QVERIFY(zip.open(QuaZip::mdUnzip));
-    FileObject *fb = FileFactory::getFileObject(&zip, "A.txt");
+    FileObject *fb = FileFactory::getFile(&zip, "A.txt");
     QVERIFY(fb != 0);
     QByteArray ba;
     READ_ALL(fb, ba);

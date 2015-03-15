@@ -25,6 +25,7 @@
 #include <QVariant>
 #include <QStringList>
 
+QEM_BEGIN_NAMESPACE
 
 class QEM_SHARED_EXPORT Attributes : public QObject
 {
@@ -44,14 +45,14 @@ public:
         return *this;
     }
 
-    /// Returns count of attributes.
+    /// Returns number of attributes.
     QEM_INVOKABLE inline int attributeCount() const
     {
         return m_attributes.size();
     }
 
     /// Returns names of all attributes.
-    QEM_INVOKABLE inline QStringList names() const
+    QEM_INVOKABLE inline QStringList attributeNames() const
     {
         return QStringList(m_attributes.keys());
     }
@@ -77,13 +78,14 @@ public:
 
 signals:
     void attributeChanged(const QString &name, const QVariant &value);
-    void attributeRemoved(const QString &name, const QVariant &value);
+    void attributeRemoved(const QString &name);
 
 private:
     QVariantMap m_attributes;
 };
 
+QEM_END_NAMESPACE
 
-Q_DECLARE_METATYPE(Attributes)
+Q_DECLARE_METATYPE(QEM_PREPEND_NAMESPACE(Attributes))
 
 #endif // QEM_ATTRIBUTES_H

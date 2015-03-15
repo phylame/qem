@@ -27,7 +27,7 @@
      <x>0</x>
      <y>0</y>
      <width>725</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -105,6 +105,11 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionNew"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionCopy"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen">
@@ -240,7 +245,7 @@
   <action name="actionCut">
    <property name="icon">
     <iconset resource="winabw.qrc">
-     <normaloff>:/editCut</normaloff>:/editCut</iconset>
+     <normaloff>:/editCopy</normaloff>:/editCopy</iconset>
    </property>
    <property name="text">
     <string>Cu&amp;t</string>
@@ -252,7 +257,7 @@
   <action name="actionCopy">
    <property name="icon">
     <iconset resource="winabw.qrc">
-     <normaloff>:/editCopy</normaloff>:/editCopy</iconset>
+     <normaloff>:/editPaste</normaloff>:/editPaste</iconset>
    </property>
    <property name="text">
     <string>&amp;Copy</string>

@@ -23,6 +23,7 @@
 #include <QDate>
 #include <QMap>
 
+QEM_BEGIN_NAMESPACE
 
 class QEM_SHARED_EXPORT Book : public Chapter
 {
@@ -113,9 +114,9 @@ public:
         return m_extensions.contains(name);
     }
 
-    QEM_INVOKABLE QVariant getItem(const QString &name) const
+    QEM_INVOKABLE QVariant getItem(const QString &name, const QVariant &defValue = QVariant()) const
     {
-        return m_extensions.value(name);
+        return m_extensions.value(name, defValue);
     }
 
     QEM_INVOKABLE QVariant removeItem(const QString &name)
@@ -150,14 +151,15 @@ signals:
     void languageChanged(const QString &language);
 protected slots:
     virtual void fireAttributeChange(const QString &name, const QVariant &value);
-    virtual void fireAttributeRemove(const QString &name, const QVariant &value);
+    virtual void fireAttributeRemove(const QString &name);
 #endif
 
 private:
     ExtensionMap m_extensions;
 };
 
+QEM_END_NAMESPACE
 
-Q_DECLARE_METATYPE(Book)
+Q_DECLARE_METATYPE(QEM_PREPEND_NAMESPACE(Book))
 
 #endif // QEM_BOOK_H

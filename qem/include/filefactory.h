@@ -27,22 +27,29 @@
 # define QUAZIP_STATIC
 #endif
 
-class QIODevice;
 class QuaZip;
+class QIODevice;
+
+QEM_BEGIN_NAMESPACE
 
 class QEM_SHARED_EXPORT FileFactory
 {
 private:
     FileFactory();
 public:
-    static FileObject* getFileObject(const QString &name, const QString &mime = QString(), QObject *parent = 0);
+    static FileObject* getFile(const QString &name, const QString &mime = QString(),
+                               QObject *parent = 0);
 
-    static FileObject* getFileObject(const QString &name, QIODevice *device, qint64 offset, qint64 size,
-                                     const QString &mime = QString(),
+    static FileObject* getFile(const QString &name, QIODevice *device,
+                               qint64 offset, qint64 size,
+                               const QString &mime = QString(),
                               QObject *parent = 0);
-    static FileObject* getFileObject(QuaZip *zip, const QString &name, const QString &mime = QString(),
-                                     QObject *parent = 0);
+
+    static FileObject* getFile(QuaZip *zip, const QString &name, const QString &mime = QString(),
+                               QObject *parent = 0);
 
 };
+
+QEM_END_NAMESPACE
 
 #endif // QEM_FILEFACTORY_H

@@ -22,7 +22,6 @@
 #include "testfileobject.h"
 #include "testtextobject.h"
 #include "testpart.h"
-#include "testreadandmake.h"
 
 
 int main(int argc, char *argv[])
@@ -45,10 +44,6 @@ int main(int argc, char *argv[])
     {
         TestPart testPart;
         err = qMax(err, QTest::qExec(&testPart, app.arguments()));
-    }
-    {
-        TestReadAndMake test;
-        err = qMax(err, QTest::qExec(&test, app.arguments()));
     }
     if (err == 0) {
         qDebug("All tests executed successfully");

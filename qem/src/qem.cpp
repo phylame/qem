@@ -17,6 +17,7 @@
  */
 
 #include <qem.h>
+#include <utils.h>
 #include <fileutils.h>
 #include <formats/all.h>
 #include <QDate>
@@ -25,95 +26,107 @@
 #include <QTextStream>
 #include <QStringList>
 
+QEM_BEGIN_NAMESPACE
 
-/// Print debug message and set to \a error if \a error != 0.
-static QDebug& debug(const QString &msg, QString *error)
-{
-    if (error != 0) {
-        *error = msg;
-    }
-    return qDebug() << msg;
-}
-
-const QString Qem::VERSION(QEM_VERSION);
+const QString Qem::VERSION(QEM_VERSION " (built " __DATE__ ")");
 
 const QString Qem::FORMAT_PMAB("pmab");
 
 QString Qem::variantType(const QVariant &v)
 {
-    QString type = v.typeName();
-    if (type.isEmpty()) {
-        if(v.canConvert<QObject*>()) {
-            type = v.value<QObject*>()->metaObject()->className();
-        }
-    } else if ("FileObjectPointer" == type) {
-        type = "file";
-    } else if ("TextObject" == type) {
-        type = "text";
-    }
-    return type;
-}
-
-QString Qem::formatVariant(const QVariant &v)
-{
-    QString s;
-    if (v.isNull()) {
-        return s;
-    }
+    QString name;
     switch (v.type()) {
     case QVariant::String:
-    {
-        s = v.toString();
-    }
+    case QVariant::Char:
+        name = "str";
         break;
     case QVariant::Date:
-    {
-        s = v.toDate().toString("yyyy-M-d");
-    }
+        name = "date";
         break;
     case QVariant::Time:
-    {
-        s = v.toTime().toString("H:m:s");
-    }
+        name = "time";
         break;
     case QVariant::DateTime:
-    {
-        s = v.toDateTime().toString("yyyy-M-d H:m:s");
-    }
+        name = "datetime";
         break;
     case QVariant::Int:
-    {
-        s = QString::number(v.toInt());
-    }
+        name = "int";
         break;
     case QVariant::UInt:
-    {
-        s = QString::number(v.toUInt());
-    }
+        name = "uint";
         break;
     case QVariant::Bool:
-    {
-        s = v.toBool() ? "true" : "false";
-    }
+        name = "bool";
+        break;
+    case QVariant::ByteArray:
+        name = "bytes";
+        break;
+    case QVariant::Double:
+        name = "real";
         break;
     default:
     {
         if (v.canConvert<FileObjectPointer>()) {
-            FileObjectPointer p = v.value<FileObjectPointer>();
+            name = "file";
+        } else if (v.canConvert<TextObject>()) {
+            name = "text";
+        } else if (v.canConvert<QObject*>()) {
+            name = v.value<QObject*>()->metaObject()->className();
+        }
+    }
+        break;
+    }
+    return name;
+}
+
+QString Qem::formatVariant(const QVariant &value)
+{
+    QString s;
+    if (value.isNull()) {
+        return s;
+    }
+    switch (value.type()) {
+    case QVariant::String:
+    case QVariant::Int:
+    case QVariant::UInt:
+    case QVariant::Bool:
+    {
+        s = value.toString();
+    }
+        break;
+    case QVariant::Date:
+    {
+        s = value.toDate().toString("yyyy-M-d");
+    }
+        break;
+    case QVariant::Time:
+    {
+        s = value.toTime().toString("H:m:s");
+    }
+        break;
+    case QVariant::DateTime:
+    {
+        s = value.toDateTime().toString("yyyy-M-d H:m:s");
+    }
+        break;
+    default:
+    {
+        if (value.canConvert<FileObjectPointer>()) {
+            FileObjectPointer p = value.value<FileObjectPointer>();
             if (p != 0) {
                 s = p->name();
             }
-        } else if (v.canConvert<QObject*>()) {     // convert by class name
-            QObject *obj = v.value<QObject*>();
+        } else if (value.canConvert<TextObject>()) {
+            s = value.value<TextObject>().text();
+        } else if (value.canConvert<QObject*>()) {     // convert by class name
+            QObject *obj = value.value<QObject*>();
             const char *className = obj->metaObject()->className();
-            if (QString("FileObject") == className) {
+            if (QString("FileObject") == className) {       // from QML invoke
                 FileObject *file = dynamic_cast<FileObject*>(obj);
                 if (file != 0) {
                     s = file->name();
                 }
             }
-        } else if (v.canConvert<TextObject>()) {
-            s = v.value<TextObject>().text();
         }
     }
         break;
@@ -187,16 +200,21 @@ static bool _isRegisteredInner = false;
 
 static void registerInner()
 {
+    using txt::TXT;
     _books.insert(TXT::FORMAT_NAME, BookDesc(TXT::FORMAT_NAME, TXT::parseTxt, TXT::makeTxt));
+    using umd::UMD;
     _books.insert(UMD::FORMAT_NAME, BookDesc(UMD::FORMAT_NAME, UMD::parseUmd, 0));
+    using jar::JAR;
     _books.insert(JAR::FORMAT_NAME, BookDesc(JAR::FORMAT_NAME, JAR::parseJar, 0));
+    using pmab::PMAB;
     _books.insert(PMAB::FORMAT_NAME, BookDesc(PMAB::FORMAT_NAME, PMAB::parsePmab, 0));
+    using epub::EPUB;
     _books.insert(EPUB::FORMAT_NAME, BookDesc(EPUB::FORMAT_NAME, 0, EPUB::makeEpub));
     _isRegisteredInner = true;
 }
 
 // parser
-void Qem::registerBookParser(const QString &format, Qem::Parser parser)
+void Qem::registerParser(const QString &format, Qem::Parser parser)
 {
     if (! _isRegisteredInner) {
         registerInner();
@@ -212,7 +230,7 @@ void Qem::registerBookParser(const QString &format, Qem::Parser parser)
     }
 }
 
-bool Qem::hasBookParser(const QString &format)
+bool Qem::hasParser(const QString &format)
 {
     if (! _isRegisteredInner) {
         registerInner();
@@ -238,7 +256,7 @@ QStringList Qem::getSupportedParser()
     return rev;
 }
 
-Qem::Parser Qem::getBookParser(const QString &format)
+Qem::Parser Qem::getParser(const QString &format)
 {
     if (! _isRegisteredInner) {
         registerInner();
@@ -250,7 +268,7 @@ Qem::Parser Qem::getBookParser(const QString &format)
 }
 
 // maker
-void Qem::registerBookMaker(const QString &format, Qem::Maker maker)
+void Qem::registerMaker(const QString &format, Qem::Maker maker)
 {
     if (! _isRegisteredInner) {
         registerInner();
@@ -266,7 +284,7 @@ void Qem::registerBookMaker(const QString &format, Qem::Maker maker)
     }
 }
 
-bool Qem::hasBookMaker(const QString &format)
+bool Qem::hasMaker(const QString &format)
 {
     if (! _isRegisteredInner) {
         registerInner();
@@ -292,7 +310,7 @@ QStringList Qem::getSupportedMaker()
     return rev;
 }
 
-Qem::Maker Qem::getBookMaker(const QString &format)
+Qem::Maker Qem::getMaker(const QString &format)
 {
     if (! _isRegisteredInner) {
         registerInner();
@@ -355,7 +373,7 @@ Book* Qem::readBook(const QString &name, const QString &format, const QVariantMa
 
 Book* Qem::readBook(QIODevice &device, const QString &format, const QVariantMap &args, QString *error)
 {
-    Parser parser = getBookParser(format);
+    Parser parser = getParser(format);
     if (0 == parser) {
         debug("Not found parser for: "+format, error);
         return 0;
@@ -392,7 +410,7 @@ bool Qem::writeBook(const Book &book, const QString &name, const QString &format
 bool Qem::writeBook(const Book &book, QIODevice &device, const QString &format,
                 const QVariantMap &args, QString *error)
 {
-    Maker maker = getBookMaker(format);
+    Maker maker = getMaker(format);
     if (0 == maker) {
         debug("Not found maker for: "+format, error);
         return false;
@@ -415,3 +433,5 @@ bool Qem::convertBook(QIODevice &in, QString inFormat, const QVariantMap &parseA
     delete book;
     return ret;
 }
+
+QEM_END_NAMESPACE

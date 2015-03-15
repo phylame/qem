@@ -21,7 +21,6 @@ INCLUDEPATH += \
 HEADERS += \
     testpart.h \
     testattributes.h \
-    testreadandmake.h \
     testfileobject.h \
     testtextobject.h
 
@@ -29,7 +28,6 @@ SOURCES += \
     testpart.cpp \
     testattributes.cpp \
     testqem.cpp \
-    testreadandmake.cpp \
     testfileobject.cpp \
     testtextobject.cpp
 

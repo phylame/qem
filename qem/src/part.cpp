@@ -19,6 +19,7 @@
 #include <part.h>
 #include <QtDebug>
 
+QEM_BEGIN_NAMESPACE
 
 class PartPrivate
 {
@@ -179,6 +180,14 @@ Part* Part::newPart(const QString &title, const QString &text)
 Part* Part::newPart(const QString &title, FileObject *file, const QByteArray &codec)
 {
     Part *part = new Part(title, file, codec, this);
+    Q_ASSERT(part != 0);
+    append(part);
+    return part;
+}
+
+Part* Part::newPart(const QString &title, const TextObject &source)
+{
+    Part *part = new Part(title, source, this);
     Q_ASSERT(part != 0);
     append(part);
     return part;
@@ -350,11 +359,13 @@ void Part::fireAttributeChange(const QString &name, const QVariant &value)
     }
 }
 
-void Part::fireAttributeRemove(const QString &name, const QVariant &value)
+void Part::fireAttributeRemove(const QString &name)
 {
     if (TITLE_KEY == name) {
         emit titleChanged(QString());
     }
 }
 
-#endif
+#endif  // QEM_QML_TARGET
+
+QEM_END_NAMESPACE

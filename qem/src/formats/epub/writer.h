@@ -19,23 +19,32 @@
 #ifndef QEM_EPUB_WRITER_H
 #define QEM_EPUB_WRITER_H
 
+#include <qem_global.h>
 #include <QList>
 #include <QString>
 
-
-class Book;
 class QuaZip;
 class QuaZipFile;
-struct EpubMakeConfig;
-class FileObject;
 class QIODevice;
 class QXmlStreamWriter;
+
+QEM_BEGIN_NAMESPACE
+
+class Book;
+class FileObject;
+
+namespace epub
+{
+
+class EpubMakeConfig;
 
 class EpubWriter
 {
 public:
     inline EpubWriter(const Book &book, QuaZip &zip, const EpubMakeConfig &config, QString *error) :
         book(const_cast<Book*>(&book)), zip(&zip), config(const_cast<EpubMakeConfig*>(&config)), error(error)
+    {}
+    virtual ~EpubWriter()
     {}
     virtual bool make() = 0;
 protected:
@@ -145,5 +154,9 @@ protected:
     virtual bool writeOPF(const QString &bookID, QString &opfPath);
 
 };
+
+}   // epub
+
+QEM_END_NAMESPACE
 
 #endif

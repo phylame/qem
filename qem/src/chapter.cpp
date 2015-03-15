@@ -19,6 +19,7 @@
 #include <chapter.h>
 #include <QtDebug>
 
+QEM_BEGIN_NAMESPACE
 
 const QString Chapter::COVER_KEY("cover");
 const QString Chapter::INTRO_KEY("intro");
@@ -93,15 +94,17 @@ void Chapter::fireAttributeChange(const QString &name, const QVariant &value)
     }
 }
 
-void Chapter::fireAttributeRemove(const QString &name, const QVariant &value)
+void Chapter::fireAttributeRemove(const QString &name)
 {
     if (COVER_KEY == name) {
         emit coverChanged(0);
     } else if (INTRO_KEY == name) {
         emit introChanged(TextObject());
     } else {
-        Part::fireAttributeRemove(name, value);
+        Part::fireAttributeRemove(name);
     }
 }
 
-#endif
+#endif  // QEM_QML_TARGET
+
+QEM_END_NAMESPACE

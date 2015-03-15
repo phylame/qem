@@ -21,6 +21,7 @@
 
 #include "part.h"
 
+QEM_BEGIN_NAMESPACE
 
 class QEM_SHARED_EXPORT Chapter : public Part
 {
@@ -34,13 +35,13 @@ protected:
     static const QString COVER_KEY;
     static const QString INTRO_KEY;
 public:
-    explicit Chapter(const QString &title = QString(), const QString &text =
-            QString(), const FileObject *cover = 0, const TextObject &intro =
-            TextObject(), QObject *parent = 0);
+    explicit Chapter(const QString &title = QString(), const QString &text = QString(),
+                     const FileObject *cover = 0, const TextObject &intro = TextObject(),
+                     QObject *parent = 0);
 
-    Chapter(const QString &title, FileObject *file, const QByteArray &codec =
-            QByteArray(), const FileObject *cover = 0, const TextObject &intro =
-            TextObject(), QObject *parent = 0);
+    Chapter(const QString &title, FileObject *file, const QByteArray &codec = QByteArray(),
+            const FileObject *cover = 0, const TextObject &intro = TextObject(),
+            QObject *parent = 0);
 
     Chapter(const QString &title, const TextObject &source,
             const FileObject *cover = 0, const TextObject &intro = TextObject(),
@@ -84,7 +85,7 @@ public:
     }
 
     QEM_INVOKABLE inline void setIntroFile(FileObject *file,
-                    const QByteArray &codec = QByteArray())
+                                           const QByteArray &codec = QByteArray())
     {
         setIntro(TextObject(file, codec));
     }
@@ -101,12 +102,13 @@ signals:
     void introChanged(const TextObject &intro);
 protected slots:
     virtual void fireAttributeChange(const QString &name, const QVariant &value);
-    virtual void fireAttributeRemove(const QString &name, const QVariant &value);
+    virtual void fireAttributeRemove(const QString &name);
 #endif
 
 };
 
+QEM_END_NAMESPACE
 
-Q_DECLARE_METATYPE(Chapter)
+Q_DECLARE_METATYPE(QEM_PREPEND_NAMESPACE(Chapter))
 
 #endif // QEM_CHAPTER_H

@@ -7,7 +7,7 @@
 TEMPLATE    = app
 TARGET      = scq
 
-VERSION     = 1.0.1
+VERSION     = 1.0.2
 DEFINES     += SCQ_VERSION=\\\"$$VERSION\\\"
 
 CONFIG      += console

@@ -17,9 +17,9 @@
  */
 
 #include "writer.h"
-#include <formats/epub.h>
-#include <formats/utils.h>
+#include <utils.h>
 #include <fileutils.h>
+#include <formats/epub.h>
 #include <QUuid>
 #include <QtDebug>
 #include <QFileInfo>
@@ -27,6 +27,10 @@
 #include <QXmlStreamWriter>
 #include <quazipfile.h>
 
+QEM_BEGIN_NAMESPACE
+
+namespace epub
+{
 
 inline QString EpubWriter::opsPath(QString name)
 {
@@ -51,7 +55,7 @@ QuaZipFile* EpubWriter::initOpsEntry(const QString &entryName, QString *opsPath)
         *opsPath = zipPath;
     }
     if (!file->open(QuaZipFile::WriteOnly, QuaZipNewInfo(zipPath))) {
-        FormatsUtility::debug("Cannot write " + entryName, error);
+        debug("Cannot write " + entryName, error);
         delete file;
         return 0;
     }
@@ -61,7 +65,7 @@ QuaZipFile* EpubWriter::initOpsEntry(const QString &entryName, QString *opsPath)
 inline bool EpubWriter::writeMt()
 {
     if (!FileUtils::writeZipData(*zip, EPUB::MIMETYPE_FILE, EPUB::MT_EPUB)) {
-        FormatsUtility::debug("Cannot write mimetype to EPUB", error);
+        debug("Cannot write mimetype to EPUB", error);
         return false;
     }
     return true;
@@ -71,7 +75,7 @@ bool EpubWriter::writeContainer(const QString &opfPath)
 {
     QuaZipFile zipFile(zip, book);
     if (!zipFile.open(QuaZipFile::WriteOnly, QuaZipNewInfo(EPUB::CONTAINER_FILE))) {
-        FormatsUtility::debug("Cannot write " + EPUB::CONTAINER_FILE, error);
+        debug("Cannot write " + EPUB::CONTAINER_FILE, error);
         return false;
     }
     QXmlStreamWriter xml(&zipFile);
@@ -134,7 +138,7 @@ bool EpubWriter::writeNCX_2005_1(QXmlStreamWriter &xml, const QString &bookID)
     if (!cover.isEmpty()) {
         href = QString("%1/%2").arg(config->textDir, EPUB::CoverPageFileName);
         if (!writeCoverPage(EPUB::CoverPageTitle, href, cover)) {
-            FormatsUtility::debug("Cannot write book cover page", error);
+            debug("Cannot write book cover page", error);
             return false;
         }
         addSpineItem(EPUB::CoverPageFileId, true, EPUB::DUOKAN_FULL_SCREEN);
@@ -157,7 +161,7 @@ bool EpubWriter::writeNCX(const QString &bookID)
 {
     QTemporaryFile ncxFile;
     if (! ncxFile.open()) {
-        FormatsUtility::debug("Cannot write NCX file", error);
+        debug("Cannot write NCX file", error);
         return false;
     }
     QXmlStreamWriter xml(&ncxFile);
@@ -374,3 +378,7 @@ bool EpubWriterV2::writeOPF(const QString &bookID, QString &opfPath)
     delete zipFile;
     return true;
 }
+
+}   // epub
+
+QEM_END_NAMESPACE

@@ -29,26 +29,27 @@
 
 class QuaZip;
 
-class QEM_SHARED_EXPORT JAR
+QEM_BEGIN_NAMESPACE
+
+namespace jar
 {
-private:
-    JAR();
-public:
-    /// Name of this book format.
-    static const QString FORMAT_NAME;
+    class QEM_SHARED_EXPORT JAR
+    {
+    private:
+        JAR();
+    public:
+        /// Name of this book format.
+        static const QString FORMAT_NAME;
 
-    /// File magic number of JAR book.
-    static const quint32 FILE_HEADER = 0x00013000;
+        static Book* parseJar(QIODevice &device, const QVariantMap &args = QVariantMap(), QString *error = 0);
 
-    static const QByteArray TEXT_ENCODING;
-    static const QByteArray HEAD_ENCODING;
+        static Book* parseJar(QuaZip &zip, const QVariantMap &args = QVariantMap(), QString *error = 0);
 
-    static Book* parseJar(QIODevice &device, const QVariantMap &args = QVariantMap(), QString *error = 0);
+        static bool makeJar(const Book &book, QIODevice &device, const QVariantMap &args = QVariantMap(),
+                            QString *error = 0);
+    };
+}   // jar
 
-    static Book* parseJar(QuaZip &zip, const QVariantMap &args = QVariantMap(), QString *error = 0);
-
-    static bool makeJar(const Book &book, QIODevice &device, const QVariantMap &args = QVariantMap(),
-                        QString *error = 0);
-};
+QEM_END_NAMESPACE
 
 #endif // QEM_JAR_H

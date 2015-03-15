@@ -16,14 +16,15 @@
  * limitations under the License.
  */
 
+#include "testtextobject.h"
+#include <textobject.h>
+#include <filefactory.h>
 #include <QDir>
 #include <QFile>
 #include <QBuffer>
 #include <QTextStream>
-#include "textobject.h"
-#include "filefactory.h"
-#include "testtextobject.h"
 
+QEM_USE_NAMESPACE
 
 void TestTextObject::newTextObject()
 {
@@ -35,7 +36,7 @@ void TestTextObject::newTextObject()
     QVERIFY(file.open(QFile::WriteOnly));
     file.write("this is a string");
     file.close();
-    FileObject *fb = FileFactory::getFileObject("tmp.txt", "", &to);
+    FileObject *fb = FileFactory::getFile("tmp.txt", "", &to);
     QVERIFY(fb != 0);
     TextObject to1(fb);
     QVERIFY(to1.file() != 0);
@@ -59,7 +60,7 @@ void TestTextObject::setText()
 void TestTextObject::setFile()
 {
     TextObject to1;
-    FileObject *fb = FileFactory::getFileObject("tmp.txt", "", &to1);
+    FileObject *fb = FileFactory::getFile("tmp.txt", "", &to1);
     to1.setFile(fb);
     QVERIFY(to1.file() != 0);
     QCOMPARE(to1.text(), QString("this is a string"));

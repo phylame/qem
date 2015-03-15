@@ -30,15 +30,14 @@ class TestAttributes : public QObject
 public:
     TestAttributes();
 signals:
-    
+
 public slots:
     void onChange(const QString &name, const QVariant &v);
-    void onRemove(const QString &name, const QVariant &v);
+    void onRemove(const QString &name);
 private slots:
     void setAttribute();
     void getAttribute();
     void removeAttribute();
-
 private:
     inline void reset()
     {

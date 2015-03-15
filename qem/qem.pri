@@ -27,8 +27,8 @@ HEADERS += \
     include/formats/jar.h \
     include/formats/all.h \
     include/formats/epub.h \
-    include/formats/utils.h \
-    src/formats/epub/writer.h
+    src/formats/epub/writer.h \
+    $$PWD/include/utils.h
 
 SOURCES += \
     src/textobject.cpp \
@@ -45,8 +45,8 @@ SOURCES += \
     src/formats/pmab.cpp \
     src/formats/jar.cpp \
     src/formats/epub.cpp \
-    src/formats/utils.cpp \
-    src/formats/epub/writer.cpp
+    src/formats/epub/writer.cpp \
+    $$PWD/src/utils.cpp
 
 RESOURCES += \
     $$PWD/qem.qrc

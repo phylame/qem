@@ -26,10 +26,12 @@
 #include "textobject.h"
 #include "fileobject.h"
 
-
-class PartPrivate;
 class QTextStream;
 class QIODevice;
+
+QEM_BEGIN_NAMESPACE
+
+class PartPrivate;
 
 class QEM_SHARED_EXPORT Part : public Attributes, public QList<Part*>
 {
@@ -50,11 +52,11 @@ public:
     typedef void (*Cleaner)(Part &part, void *arg);
     typedef bool (*Filter)(const Part &part, void *arg);
 
-    explicit Part(const QString &title = QString(), const QString &text =
-            QString(), QObject *parent = 0);
+    explicit Part(const QString &title = QString(), const QString &text = QString(),
+                  QObject *parent = 0);
 
-    Part(const QString &title, FileObject *file, const QByteArray &codec =
-            QByteArray(), QObject *parent = 0);
+    Part(const QString &title, FileObject *file, const QByteArray &codec = QByteArray(),
+         QObject *parent = 0);
 
     Part(const QString &title, const TextObject &source, QObject *parent = 0);
 
@@ -75,8 +77,8 @@ public:
 
     QEM_INVOKABLE virtual qint64 writeTo(QTextStream &out, qint64 size = -1) const;
 
-    QEM_INVOKABLE virtual qint64 writeTo(QIODevice &out, const QByteArray &encoding =
-            QByteArray(), qint64 size = -1) const;
+    QEM_INVOKABLE virtual qint64 writeTo(QIODevice &out, const QByteArray &encoding = QByteArray(),
+                                         qint64 size = -1) const;
 
     QEM_INVOKABLE virtual QString text() const;
 
@@ -84,24 +86,26 @@ public:
 
     QEM_INVOKABLE virtual FileObject* file() const;
 
-    QEM_INVOKABLE virtual void setFile(FileObject *file, const QByteArray &codec =
-            QByteArray());
-
     QEM_INVOKABLE virtual QByteArray codec() const;
+
+    QEM_INVOKABLE virtual void setFile(FileObject *file, const QByteArray &codec = QByteArray());
 
     /// Returns depth of sub-parts tree.
     int depth() const;
 
     /// Return \c true if has sub-parts, otherwise \c false.
     QEM_INVOKABLE inline bool isSection() const
-    {return size() != 0;}
+    { return size() != 0; }
 
-    /// Create a part and set its parent to self.
+    /// Creates a part and appends to sub-part list.
     QEM_INVOKABLE Part* newPart(const QString &title, const QString &text = QString());
 
-    /// Create a part and set its parent to self.
+    /// Creates a part and appends to sub-part list.
     QEM_INVOKABLE Part* newPart(const QString &title, FileObject *file,
                                 const QByteArray &codec = QByteArray());
+
+    /// Creates a part add appends to sub-part list.
+    QEM_INVOKABLE Part* newPart(const QString &title, const TextObject &source);
 
     /// Sets sub-part \a part at index \a i and set its parent to self.
     QEM_INVOKABLE void set(int i, Part* part);
@@ -170,11 +174,12 @@ signals:
     void sizeChanged(int size);
 protected slots:
     virtual void fireAttributeChange(const QString &name, const QVariant &value);
-    virtual void fireAttributeRemove(const QString &name, const QVariant &value);
+    virtual void fireAttributeRemove(const QString &name);
 #endif
 };
 
+QEM_END_NAMESPACE
 
-Q_DECLARE_METATYPE(Part)
+Q_DECLARE_METATYPE(QEM_PREPEND_NAMESPACE(Part))
 
 #endif // QEM_PART_H

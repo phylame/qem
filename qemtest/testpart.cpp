@@ -16,12 +16,13 @@
  * limitations under the License.
  */
 
-#include <QString>
-#include <QBuffer>
-#include <QTextStream>
 #include "testpart.h"
-#include "book.h"
+#include <book.h>
+#include <QBuffer>
+#include <QString>
+#include <QTextStream>
 
+QEM_USE_NAMESPACE
 
 TestPart::TestPart()
 {
